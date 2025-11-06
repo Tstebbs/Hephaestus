@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://fwllc2fjygdb"]
+
+[node name="GeneratorInterface" type="Node2D"]
