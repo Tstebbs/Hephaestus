@@ -1,0 +1,47 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Uni Abertay\\Uni work\\Y4\\CMP 400\\Repos\\Hephaestus\\hephaestus\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|d:\\uni abertay\\uni work\\y4\\cmp 400\\repos\\hephaestus\\hephaestus\\scenes\\testsword.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|solutionrelative:scenes\\testsword.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TestSword.cs",
+              "DocumentMoniker": "D:\\Uni Abertay\\Uni work\\Y4\\CMP 400\\Repos\\Hephaestus\\hephaestus\\Scenes\\TestSword.cs",
+              "RelativeDocumentMoniker": "Scenes\\TestSword.cs",
+              "ToolTip": "D:\\Uni Abertay\\Uni work\\Y4\\CMP 400\\Repos\\Hephaestus\\hephaestus\\Scenes\\TestSword.cs",
+              "RelativeToolTip": "Scenes\\TestSword.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T13:40:30.488Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 240,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

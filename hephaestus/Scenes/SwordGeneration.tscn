@@ -1,3 +1,19 @@
-[gd_scene format=3 uid="uid://d3dagba6jmr60"]
+[gd_scene load_steps=4 format=3 uid="uid://d3dagba6jmr60"]
+
+[ext_resource type="Script" uid="uid://386qi276ctpq" path="res://Scenes/SwordGeneration.cs" id="1_p7yi8"]
+[ext_resource type="PackedScene" uid="uid://bvwh76h8v82s1" path="res://Scenes/SwordGenUI.tscn" id="2_c6g4d"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_na31y"]
 
 [node name="SwordGeneration" type="Node3D"]
+script = ExtResource("1_p7yi8")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.192522, 0, 0.98129267, 0, 1, 0, -0.98129267, 0, -0.192522, 10, 0, 0)
+current = true
+fov = 100.0
+
+[node name="SwordGenUi" parent="Camera3D" instance=ExtResource("2_c6g4d")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_na31y")
