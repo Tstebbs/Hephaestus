@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "D:\\Uni Abertay\\Uni work\\Y4\\CMP 400\\Repos\\Hephaestus\\hephaestus\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Uni Abertay\\Uni work\\Y4\\CMP 400\\Repos\\Hephaestus\\hephaestus\\Scenes\\SwordGeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Scenes\\SwordGeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|d:\\uni abertay\\uni work\\y4\\cmp 400\\repos\\hephaestus\\hephaestus\\scenes\\swordgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|solutionrelative:scenes\\swordgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|d:\\uni abertay\\uni work\\y4\\cmp 400\\repos\\hephaestus\\hephaestus\\scenes\\testsword.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -28,7 +28,7 @@
               "RelativeDocumentMoniker": "Scenes\\SwordGeneration.cs",
               "ToolTip": "D:\\Uni Abertay\\Uni work\\Y4\\CMP 400\\Repos\\Hephaestus\\hephaestus\\Scenes\\SwordGeneration.cs",
               "RelativeToolTip": "Scenes\\SwordGeneration.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAADEAAAAAAAAAAAAcwFIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-19T16:14:11.719Z",
               "EditorCaption": ""
@@ -43,8 +43,7 @@
               "RelativeToolTip": "Scenes\\TestSword.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T13:40:30.488Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-19T13:40:30.488Z"
             }
           ]
         },

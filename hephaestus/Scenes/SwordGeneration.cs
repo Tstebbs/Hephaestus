@@ -33,7 +33,9 @@ public partial class SwordGeneration : Node3D
         bladeWidth = 0.2f;
         //genButton = GetChild<Button>(1);
         //genButton.Pressed += GeneratePressed;
+
         SpinePositions = new Array<Vector2>();
+        crossSecPositions = new Array<Vector2>();
         generatePressed();
       
     }
@@ -64,11 +66,17 @@ public partial class SwordGeneration : Node3D
             createStraightSword2DArray(numCrossSec,bladeWidth,bladeHeight);
 
         }
-
+        int count = 0;
         for (int i = 0; i < 11; i++)
         {
            GD.Print(i,SpinePositions[i]);
-            GD.Print(crossSecPositions[i].X, crossSecPositions[i].Y);
+            for (int j = 0; j < 4; j++)
+            {
+                
+                GD.Print(" cross section 4 ", j," X ", crossSecPositions[count].X, " Y ",crossSecPositions[count].Y);
+                count++;
+            }
+           
         }
     }
 
@@ -112,13 +120,23 @@ public partial class SwordGeneration : Node3D
 
     private void  createStraightSword2DArray(int crossSection, float width, float height)
     {
+        //start 4 points of blade to be adapted to 12 later to allow tunable sharpness and fuller
+        float shapeWidth = width / 2;
+        float shapeHeight = width / 2;
+
         for (int i = 0; i < crossSection+1; i++)
         {
-            crossSecPositions.Add(new Vector2(width, height));
-            if(i>=8)
+            //adds 2d cross section
+           crossSecPositions.Add(new Vector2(0-shapeWidth, 0));
+           crossSecPositions.Add(new Vector2(0, 0-shapeHeight));
+           crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
+           crossSecPositions.Add(new Vector2(0, 0 + shapeHeight));
+
+           // tapers point
+            if (i >= 8)
             {
-                width = width / 2f;
-                height = height / 1.2f;
+                shapeWidth = shapeWidth / 2f;
+                shapeHeight = shapeHeight / 1.2f;
             }
         }
     }
