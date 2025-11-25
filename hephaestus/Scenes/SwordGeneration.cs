@@ -8,11 +8,12 @@ public partial class SwordGeneration : Node3D
 {
     private Button genButton;
     public Array<Vector2> SpinePositions;
+    public Array<Vector2> crossSecPositions;
     private float bladeLength;
     private float bladeWidth;
     private float bladeHeight;
     bool isSwordCurved=false;
-    public float numCrossSec = 10;
+    public int numCrossSec = 10;
 
     public enum SwordType
     {
@@ -26,7 +27,10 @@ public partial class SwordGeneration : Node3D
 
     public override void _Ready()
     {
+        //test parameters
         bladeLength = 2.0f;
+        bladeHeight = 0.05f;
+        bladeWidth = 0.2f;
         //genButton = GetChild<Button>(1);
         //genButton.Pressed += GeneratePressed;
         SpinePositions = new Array<Vector2>();
@@ -47,15 +51,24 @@ public partial class SwordGeneration : Node3D
 
     private void GenerateSwordType(SwordType sword)
     {
-        createBladeSpine(bladeLength);
+        //createBladeSpine(bladeLength);
+
         if(isSwordCurved==true)
         {
             curvedSpine();
         }
 
+        if (sword == SwordType.STRSWORD)
+        {
+            createBladeSpine(bladeLength);
+            createStraightSword2DArray(numCrossSec,bladeWidth,bladeHeight);
+
+        }
+
         for (int i = 0; i < 11; i++)
         {
            GD.Print(i,SpinePositions[i]);
+            GD.Print(crossSecPositions[i].X, crossSecPositions[i].Y);
         }
     }
 
@@ -97,9 +110,17 @@ public partial class SwordGeneration : Node3D
 
     }
 
-    private void CreateBladeType1()
+    private void  createStraightSword2DArray(int crossSection, float width, float height)
     {
-
+        for (int i = 0; i < crossSection+1; i++)
+        {
+            crossSecPositions.Add(new Vector2(width, height));
+            if(i>=8)
+            {
+                width = width / 2f;
+                height = height / 1.2f;
+            }
+        }
     }
 }
 
