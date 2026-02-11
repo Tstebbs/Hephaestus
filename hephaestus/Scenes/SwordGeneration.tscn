@@ -14,7 +14,7 @@ mesh = SubResource("ArrayMesh_na31y")
 [node name="SwordGenUi" parent="SwordBladeMesh" unique_id=2106063098 instance=ExtResource("2_c6g4d")]
 
 [node name="Camera3D" type="Camera3D" parent="SwordBladeMesh" unique_id=1727162422]
-transform = Transform3D(-0.192522, 0, 0.98129267, 0, 1, 0, -0.98129267, 0, -0.192522, 10, 0, 0)
+transform = Transform3D(-0.192522, 0, 0.98129267, 0, 1, 0, -0.98129267, 0, -0.192522, 3.2567415, 0, 0)
 current = true
 fov = 100.0
 

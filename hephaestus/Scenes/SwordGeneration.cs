@@ -32,7 +32,7 @@ public partial class SwordGeneration : Node3D
     public override void _Ready()
     {
         //test parameters will be set using sliders in the future
-        bladeLength = 20.0f;
+        bladeLength = 2.0f;
         bladeHeight = 0.05f;
         bladeWidth = 0.2f;
 
@@ -52,6 +52,7 @@ public partial class SwordGeneration : Node3D
         //function called currently on applicattion start but will be set to button press
         //generatePressed();
         //generateMesh((4 /*SpinePositions, crossSecPositions*/));
+        
     }
 
     public override void _Process(double delta)
@@ -149,11 +150,19 @@ public partial class SwordGeneration : Node3D
         for (int i = 0; i < crossSections + 1; i++)
         {
             //adds 2d cross section
-            crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
-            crossSecPositions.Add(new Vector2(0, 0 - shapeHeight));
-            crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
-            crossSecPositions.Add(new Vector2(0, 0 + shapeHeight));
-
+            if (i == crossSections)
+            {
+                shapeHeight = 0;
+                shapeHeight = 0;
+            }
+            
+            
+            
+                crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
+                crossSecPositions.Add(new Vector2(0, 0 - shapeHeight));
+                crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
+                crossSecPositions.Add(new Vector2(0, 0 + shapeHeight));
+            
             // tapers point
             if (i >= 8)
             {
@@ -163,10 +172,10 @@ public partial class SwordGeneration : Node3D
         }
     }
 
-
+ 
     private void generateMesh(int crossSecPoints/*, godot_array bladeVertices, godot_array bladeIndices*/)
     {
-        int crossSections = 10;
+        int crossSections = 11;
 
         int _radialSegments = 50;
         float _radius = 1;
@@ -196,7 +205,8 @@ public partial class SwordGeneration : Node3D
             {
                 var u = ((float)j) / crossSecPoints;
         
-                var vert = new Vector3(crossSecPositions[i].X, crossSecPositions[i].Y, SpinePositions[j].X);
+                var vert = new Vector3(crossSecPositions[i * crossSecPoints + j].X, crossSecPositions[i * crossSecPoints + j].Y, SpinePositions[i].X);
+                GD.Print(vert);
                 verts.Add(vert);
                 normals.Add(vert.Normalized());
                 uvs.Add(new Vector2(u, v));
@@ -218,7 +228,7 @@ public partial class SwordGeneration : Node3D
             prevRow = thisRow;
             thisRow = point;
         }
-
+        
        
         // Convert Lists to arrays and assign to surface array
         surfaceArray[(int)Mesh.ArrayType.Vertex] = verts.ToArray();
@@ -237,7 +247,7 @@ public partial class SwordGeneration : Node3D
 
         MeshInstance3D meshInstance = new MeshInstance3D();
         meshInstance.Mesh = arrMesh;
-
+        
         AddChild(meshInstance);
     }
 }   
