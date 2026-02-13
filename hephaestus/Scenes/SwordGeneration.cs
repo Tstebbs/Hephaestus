@@ -176,10 +176,6 @@ public partial class SwordGeneration : Node3D
     private void generateMesh(int crossSecPoints/*, godot_array bladeVertices, godot_array bladeIndices*/)
     {
         int crossSections = 11;
-
-        int _radialSegments = 50;
-        float _radius = 1;
-
         Godot.Collections.Array surfaceArray = [];
         surfaceArray.Resize((int)Mesh.ArrayType.Max);
 
