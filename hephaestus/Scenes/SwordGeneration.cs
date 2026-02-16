@@ -3,6 +3,7 @@ using Godot.Collections;
 using Godot.NativeInterop;
 using System;
 using System.Collections.Generic;
+using System.Transactions;
 using static Godot.WebSocketPeer;
 
 public partial class SwordGeneration : Node3D
@@ -188,43 +189,47 @@ public partial class SwordGeneration : Node3D
         List<int> indices = [];
 
         // Vertex indices.
-        var thisRow = 0;
-        var prevRow = 0;
-        var point = 0;
+        int thisRow = 0;
+        int prevRow = 0;
+        int point = 0;
 
         // Loop over rings.
-        for (var i = 0; i < crossSections; i++)
+        for (int i = 0; i < crossSections; i++)
         {
-            var v = ((float)i) / crossSections;
+            float v = ((float)i) / crossSections;
         
 
             // Loop over points per cross section
-            for (var j = 0; j < crossSecPoints; j++)
+            for (int j = 0; j < crossSecPoints; j++)
             {
-                var u = ((float)j) / crossSecPoints;
+                float u = ((float)j) / crossSecPoints;
         
-                var vert = new Vector3(crossSecPositions[i * crossSecPoints + j].X, crossSecPositions[i * crossSecPoints + j].Y, SpinePositions[i].X);
+                Vector3 vert = new Vector3(crossSecPositions[i * crossSecPoints + j].X, crossSecPositions[i * crossSecPoints + j].Y, SpinePositions[i].X);
                 GD.Print(vert);
                 verts.Add(vert);
                 normals.Add(vert.Normalized());
                 uvs.Add(new Vector2(u, v));
                 point += 1;
 
+                //returns next i
+                int nextRow = (j + 1) % crossSecPoints;
                 // Create triangles in ring using indices.
-                if (i > 0 && j > 0)
+                if (i > 0)
                 {
-                    indices.Add(prevRow + j - 1);
-                    indices.Add(thisRow + j - 1);
-                    indices.Add(prevRow + j);
-
-                    indices.Add(prevRow + j);
-                    indices.Add(thisRow + j - 1);
+                    indices.Add(prevRow + j );
                     indices.Add(thisRow + j);
+                    indices.Add(prevRow + nextRow);
+
+                    indices.Add(prevRow + nextRow);
+                    indices.Add(thisRow + j);
+                    indices.Add(thisRow + nextRow);
 
                 }
+              
             }
             prevRow = thisRow;
             thisRow = point;
+           
         }
         
         // Convert Lists to arrays and assign to surface array
