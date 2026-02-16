@@ -11,7 +11,9 @@ sky_material = SubResource("PanoramaSkyMaterial_dm7ql")
 
 [sub_resource type="Environment" id="Environment_50afd"]
 background_mode = 2
+background_energy_multiplier = 0.52
 sky = SubResource("Sky_d14kj")
+ambient_light_color = Color(0.42365062, 0.42365065, 0.42365062, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_muyfj"]
 albedo_texture = ExtResource("2_anj0p")
@@ -25,6 +27,13 @@ size = Vector2(10, 10)
 environment = SubResource("Environment_50afd")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WorldEnvironment" unique_id=1277700894]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00018072128, -0.15192428, 0.00094258785)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00018072128, -0.6769897, 0.00094258785)
 material_override = SubResource("StandardMaterial3D_muyfj")
 mesh = SubResource("PlaneMesh_cai76")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="WorldEnvironment" unique_id=924906594]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.830931, 0)
+light_color = Color(1, 1, 0.8901961, 1)
+light_energy = 9.515
+shadow_enabled = true
+omni_range = 14.6684475

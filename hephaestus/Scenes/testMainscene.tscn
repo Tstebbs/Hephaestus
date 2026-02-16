@@ -5,6 +5,7 @@
 
 [node name="TestMainscene" type="Node3D" unique_id=72649522]
 
-[node name="DesignerScene" parent="." unique_id=1434766981 instance=ExtResource("1_dbabh")]
+[node name="SwordGeneration" parent="." unique_id=957261814 instance=ExtResource("2_h4bxe")]
 
-[node name="SwordGeneration" parent="DesignerScene" unique_id=957261814 instance=ExtResource("2_h4bxe")]
+[node name="DesignerScene" parent="." unique_id=1434766981 instance=ExtResource("1_dbabh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.42875695, 0)

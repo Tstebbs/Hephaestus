@@ -36,7 +36,7 @@ public partial class SwordGeneration : Node3D
         lengthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi/MarginContainer/NinePatchRect/MarginContainer/MarginContainer/VBoxContainer/LengthSlider");
         //test parameters will be set using sliders in the future
         bladeLength = 2.0f;
-        bladeHeight = 0.05f;
+        bladeHeight = 1.105f;
         bladeWidth = 0.1f;
 
         surfaceArray.Resize((int)Mesh.ArrayType.Max);
