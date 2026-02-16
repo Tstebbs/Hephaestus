@@ -7,6 +7,7 @@ using static Godot.WebSocketPeer;
 
 public partial class SwordGeneration : Node3D
 {
+    private HSlider lengthSlider;
     private Button genButton;
     public Array<Vector2> SpinePositions;
     public Array<Vector2> crossSecPositions;
@@ -31,10 +32,13 @@ public partial class SwordGeneration : Node3D
 
     public override void _Ready()
     {
+        
+       //lengthSlider = GetNode<HSlider>("SwordBladeMesh / SwordGenUi / MarginContainer / NinePatchRect / MarginContainer / MarginContainer / VBoxContainer / LengthSlider");
+       
         //test parameters will be set using sliders in the future
         bladeLength = 2.0f;
         bladeHeight = 0.05f;
-        bladeWidth = 0.2f;
+        bladeWidth = 0.1f;
 
         surfaceArray.Resize((int)Mesh.ArrayType.Max);
         List<Vector3> verts = [];
@@ -44,6 +48,8 @@ public partial class SwordGeneration : Node3D
 
         genButton = GetNode<Button>("./SwordBladeMesh/SwordGenUi/MarginContainer/NinePatchRect/MarginContainer/buttonContainer/Button");
         genButton.Pressed += generatePressed;
+
+       
 
         //sets 2D arrays for Spline and cross section shapes
         SpinePositions = new Array<Vector2>();
@@ -57,7 +63,7 @@ public partial class SwordGeneration : Node3D
 
     public override void _Process(double delta)
     {
-        
+        //bladeLength = (float)lengthSlider.Value;
     }
 
     private void generatePressed()
@@ -156,12 +162,10 @@ public partial class SwordGeneration : Node3D
                 shapeHeight = 0;
             }
             
-            
-            
-                crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
-                crossSecPositions.Add(new Vector2(0, 0 - shapeHeight));
-                crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
-                crossSecPositions.Add(new Vector2(0, 0 + shapeHeight));
+            crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
+            crossSecPositions.Add(new Vector2(0, 0 - shapeHeight));
+            crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
+            crossSecPositions.Add(new Vector2(0, 0 + shapeHeight));
             
             // tapers point
             if (i >= 8)
@@ -212,20 +216,19 @@ public partial class SwordGeneration : Node3D
                 if (i > 0 && j > 0)
                 {
                     indices.Add(prevRow + j - 1);
-                    indices.Add(prevRow + j);
                     indices.Add(thisRow + j - 1);
+                    indices.Add(prevRow + j);
 
                     indices.Add(prevRow + j);
-                    indices.Add(thisRow + j);
                     indices.Add(thisRow + j - 1);
+                    indices.Add(thisRow + j);
+
                 }
             }
-
             prevRow = thisRow;
             thisRow = point;
         }
         
-       
         // Convert Lists to arrays and assign to surface array
         surfaceArray[(int)Mesh.ArrayType.Vertex] = verts.ToArray();
         surfaceArray[(int)Mesh.ArrayType.TexUV] = uvs.ToArray();
