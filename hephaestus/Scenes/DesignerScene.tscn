@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://bbd1quki5mv45"]
+
+[ext_resource type="Texture2D" uid="uid://cqssdjpkk25o1" path="res://Resources/farm_field_puresky_4k.exr" id="1_pm24j"]
+[ext_resource type="Texture2D" uid="uid://bbxubpst7k4lo" path="res://Resources/kenney_prototypeTextures/PNG/Dark/texture_03.png" id="2_anj0p"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_dm7ql"]
+panorama = ExtResource("1_pm24j")
+
+[sub_resource type="Sky" id="Sky_d14kj"]
+sky_material = SubResource("PanoramaSkyMaterial_dm7ql")
+
+[sub_resource type="Environment" id="Environment_50afd"]
+background_mode = 2
+sky = SubResource("Sky_d14kj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_muyfj"]
+albedo_texture = ExtResource("2_anj0p")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_cai76"]
+size = Vector2(10, 10)
+
+[node name="DesignerScene" type="Node3D" unique_id=1434766981]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=295690143]
+environment = SubResource("Environment_50afd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldEnvironment" unique_id=1277700894]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00018072128, -0.15192428, 0.00094258785)
+material_override = SubResource("StandardMaterial3D_muyfj")
+mesh = SubResource("PlaneMesh_cai76")
