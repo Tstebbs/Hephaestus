@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cpo6m8ypadb0r"]
 
+[ext_resource type="Script" uid="uid://dvl2abe502lel" path="res://Scenes/Main.cs" id="1_idj7w"]
 [ext_resource type="Theme" uid="uid://dm6xohp5y5d6t" path="res://Resources/stockTheme1.tres" id="1_r150o"]
 
 [node name="MainMenu" type="Control" unique_id=244788497]
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_idj7w")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1713622442]
 layout_mode = 1
