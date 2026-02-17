@@ -1,0 +1,25 @@
+[gd_resource type="Theme" format=3 uid="uid://dm6xohp5y5d6t"]
+
+[ext_resource type="FontFile" uid="uid://crdi518i4luxq" path="res://Resources/UI/old_london/OldLondon.ttf" id="1_0a6ft"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qh5gj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dxfsq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_80ttt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1vubd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f5a2m"]
+
+[resource]
+default_font = ExtResource("1_0a6ft")
+default_font_size = 40
+Button/colors/font_focus_color = Color(0.70380753, 0.7038078, 0.7038087, 1)
+Button/colors/font_hover_color = Color(0.6174546, 0.61745465, 0.6174557, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/styles/disabled = SubResource("StyleBoxEmpty_qh5gj")
+Button/styles/focus = SubResource("StyleBoxEmpty_dxfsq")
+Button/styles/hover = SubResource("StyleBoxEmpty_80ttt")
+Button/styles/normal = SubResource("StyleBoxEmpty_1vubd")
+Button/styles/pressed = SubResource("StyleBoxEmpty_f5a2m")

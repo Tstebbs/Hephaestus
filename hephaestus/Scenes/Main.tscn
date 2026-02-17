@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://cpo6m8ypadb0r"]
+
+[ext_resource type="Theme" uid="uid://dm6xohp5y5d6t" path="res://Resources/stockTheme1.tres" id="1_r150o"]
+
+[node name="MainMenu" type="Control" unique_id=244788497]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1713622442]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.28740475, 0.18043387, 0.21263894, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=216426648]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=923466257]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1396074437]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_r150o")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 60
+text = "Hephastus - A interactive mesh Generator"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="buttonvContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=292363404]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="start" type="Button" parent="MarginContainer/VBoxContainer/buttonvContainer" unique_id=1597475074]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_bottom = NodePath("../info")
+theme = ExtResource("1_r150o")
+text = "Start Generation"
+
+[node name="info" type="Button" parent="MarginContainer/VBoxContainer/buttonvContainer" unique_id=1482042275]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../start")
+focus_neighbor_bottom = NodePath("../load saved models?")
+theme = ExtResource("1_r150o")
+text = "Info & Controls"
+
+[node name="load saved models?" type="Button" parent="MarginContainer/VBoxContainer/buttonvContainer" unique_id=702461247]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../info")
+focus_neighbor_bottom = NodePath("../Quit")
+theme = ExtResource("1_r150o")
+text = "Load Saved Models"
+
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/buttonvContainer" unique_id=1507436565]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../load saved models?")
+focus_neighbor_bottom = NodePath("../start")
+theme = ExtResource("1_r150o")
+text = "Quit"

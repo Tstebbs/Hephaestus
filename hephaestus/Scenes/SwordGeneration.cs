@@ -88,7 +88,7 @@ public partial class SwordGeneration : Node3D
         if (sword == SwordType.STRSWORD)
         {
             createBladeSpine(bladeLength);
-            createStraightSword2DArray(numCrossSec, bladeWidth, bladeHeight);
+            createStraightSword2DArray(numCrossSec, bladeWidth, bladeHeight,0.2f);
 
         }
 
@@ -146,7 +146,7 @@ public partial class SwordGeneration : Node3D
     }
 
     //creates diamond shape for cross section of sword for each spine point with paer towards tip
-    private void createStraightSword2DArray(int crossSections, float width, float height)
+    private void createStraightSword2DArray(int crossSections, float width, float height, float taperLength)
     {
         //start 4 points of blade to be adapted to 12 later to allow tunable sharpness and fuller
         float shapeWidth = width / 2;
