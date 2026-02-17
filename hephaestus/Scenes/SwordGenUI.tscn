@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bvwh76h8v82s1"]
 
 [ext_resource type="Texture2D" uid="uid://bcvjmyq3j5ypf" path="res://Resources/UI/Border and Panels Menu Part 1/10 Border 01.png" id="1_jc0ei"]
+[ext_resource type="Theme" uid="uid://dm6xohp5y5d6t" path="res://Resources/stockTheme1.tres" id="2_b23ce"]
 
 [node name="SwordGenUi" type="Control" unique_id=1180212408]
 layout_mode = 3
@@ -50,6 +51,8 @@ theme_override_constants/separation = 24
 
 [node name="Label" type="Label" parent="MarginContainer/NinePatchRect/MarginContainer/MarginContainer/VBoxContainer" unique_id=547691289]
 layout_mode = 2
+theme = ExtResource("2_b23ce")
+theme_override_font_sizes/font_size = 20
 text = "Length"
 
 [node name="LengthSlider" type="HSlider" parent="MarginContainer/NinePatchRect/MarginContainer/MarginContainer/VBoxContainer" unique_id=56054735]

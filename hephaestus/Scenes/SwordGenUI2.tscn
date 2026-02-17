@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://bjavp7vbi11qr"]
+
+[ext_resource type="Texture2D" uid="uid://ckygwxtuwaj20" path="res://Resources/testLogo.png" id="1_y0the"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xcj4p"]
+bg_color = Color(0.42365062, 0.42365065, 0.42365062, 1)
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+
+[node name="SwordGenUi" type="Control" unique_id=1180212408]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginPanelContainer" type="PanelContainer" parent="." unique_id=1971587762]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginPanelContainer" unique_id=2080562381]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginPanelContainer/HBoxContainer" unique_id=101154910]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginPanelContainer/HBoxContainer/VBoxContainer" unique_id=939670483]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="MarginPanelContainer/HBoxContainer/VBoxContainer" unique_id=1837277379]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xcj4p")
+
+[node name="Button" type="Button" parent="MarginPanelContainer/HBoxContainer/VBoxContainer/Panel" unique_id=1037815759]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="TextureRect" type="TextureRect" parent="MarginPanelContainer/HBoxContainer/VBoxContainer/Panel" unique_id=569725049]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 8.0
+offset_right = -6.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_y0the")
+expand_mode = 1
+stretch_mode = 5
