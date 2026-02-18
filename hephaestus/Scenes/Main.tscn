@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dvl2abe502lel" path="res://Scenes/Main.cs" id="1_idj7w"]
 [ext_resource type="Theme" uid="uid://dm6xohp5y5d6t" path="res://Resources/stockTheme1.tres" id="1_r150o"]
+[ext_resource type="Texture2D" uid="uid://cqf6m3q47xb5j" path="res://Resources/UI/backround.jpg" id="2_rgh2o"]
+[ext_resource type="Texture2D" uid="uid://dqampnhgut8he" path="res://Resources/UI/menu ui.png" id="4_pbw6q"]
 
 [node name="MainMenu" type="Control" unique_id=244788497]
 layout_mode = 3
@@ -12,14 +14,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_idj7w")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1713622442]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=497777355]
+z_index = -2
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.28740475, 0.18043387, 0.21263894, 1)
+texture = ExtResource("2_rgh2o")
+expand_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=216426648]
 layout_mode = 1
@@ -31,7 +35,7 @@ grow_vertical = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
+theme_override_constants/margin_bottom = 200
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=923466257]
 layout_mode = 2
@@ -50,6 +54,7 @@ vertical_alignment = 1
 [node name="buttonvContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=292363404]
 layout_mode = 2
 size_flags_vertical = 10
+theme_override_constants/separation = 40
 
 [node name="start" type="Button" parent="MarginContainer/VBoxContainer/buttonvContainer" unique_id=1597475074]
 layout_mode = 2
@@ -58,6 +63,7 @@ size_flags_vertical = 4
 focus_neighbor_top = NodePath("../Quit")
 focus_neighbor_bottom = NodePath("../info")
 theme = ExtResource("1_r150o")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Start Generation"
 
 [node name="info" type="Button" parent="MarginContainer/VBoxContainer/buttonvContainer" unique_id=1482042275]
@@ -67,6 +73,7 @@ size_flags_vertical = 4
 focus_neighbor_top = NodePath("../start")
 focus_neighbor_bottom = NodePath("../load saved models?")
 theme = ExtResource("1_r150o")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Info & Controls"
 
 [node name="load saved models?" type="Button" parent="MarginContainer/VBoxContainer/buttonvContainer" unique_id=702461247]
@@ -76,6 +83,7 @@ size_flags_vertical = 4
 focus_neighbor_top = NodePath("../info")
 focus_neighbor_bottom = NodePath("../Quit")
 theme = ExtResource("1_r150o")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Load Saved Models"
 
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/buttonvContainer" unique_id=1507436565]
@@ -85,4 +93,22 @@ size_flags_vertical = 4
 focus_neighbor_top = NodePath("../load saved models?")
 focus_neighbor_bottom = NodePath("../start")
 theme = ExtResource("1_r150o")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Quit"
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1426865399]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 758.0
+offset_top = 564.0
+offset_right = -758.0
+offset_bottom = -138.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("4_pbw6q")
+expand_mode = 1
