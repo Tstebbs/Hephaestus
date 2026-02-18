@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://bjavp7vbi11qr"]
 
-[ext_resource type="Script" uid="uid://r1kqnt3b05oa" path="res://Scenes/SwordGenUi2.cs" id="1_btirk"]
 [ext_resource type="Theme" uid="uid://dm6xohp5y5d6t" path="res://Resources/stockTheme1.tres" id="1_xcj4p"]
 [ext_resource type="Texture2D" uid="uid://ckygwxtuwaj20" path="res://Resources/testLogo.png" id="1_y0the"]
 
@@ -32,7 +31,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_btirk")
 
 [node name="sidebar" type="PanelContainer" parent="." unique_id=1971587762]
 layout_mode = 1
@@ -221,7 +219,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 
-[node name="Button" type="Button" parent="sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/buttonContainer" unique_id=232198636]
+[node name="GenerateButton" type="Button" parent="sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/buttonContainer" unique_id=232198636]
 layout_mode = 2
 text = "Generate"
 

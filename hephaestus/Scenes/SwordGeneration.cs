@@ -33,7 +33,8 @@ public partial class SwordGeneration : Node3D
 
     public override void _Ready()
     {
-        lengthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi/MarginContainer/NinePatchRect/MarginContainer/MarginContainer/VBoxContainer/LengthSlider");
+
+        lengthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/LengthSlider");
         //test parameters will be set using sliders in the future
         bladeLength = 2.0f;
         bladeHeight = 1.105f;
@@ -45,7 +46,7 @@ public partial class SwordGeneration : Node3D
         List<Vector3> normals = [];
         List<int> indices = [];
 
-        genButton = GetNode<Button>("./SwordBladeMesh/SwordGenUi/MarginContainer/NinePatchRect/MarginContainer/buttonContainer/Button");
+        genButton = GetNode<Button>("./SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/buttonContainer/GenerateButton");
         genButton.Pressed += generatePressed;
 
        
