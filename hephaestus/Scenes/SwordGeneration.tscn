@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://386qi276ctpq" path="res://Scenes/SwordGeneration.cs" id="1_p7yi8"]
 [ext_resource type="PackedScene" uid="uid://bvwh76h8v82s1" path="res://Scenes/SwordGenUI.tscn" id="2_c6g4d"]
+[ext_resource type="PackedScene" uid="uid://bjavp7vbi11qr" path="res://Scenes/SwordGenUI2.tscn" id="2_na31y"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_na31y"]
 
@@ -11,7 +12,11 @@ script = ExtResource("1_p7yi8")
 [node name="SwordBladeMesh" type="MeshInstance3D" parent="." unique_id=1068782850]
 mesh = SubResource("ArrayMesh_na31y")
 
+[node name="SwordGenUi2" parent="SwordBladeMesh" unique_id=1180212408 instance=ExtResource("2_na31y")]
+script = null
+
 [node name="SwordGenUi" parent="SwordBladeMesh" unique_id=2106063098 instance=ExtResource("2_c6g4d")]
+visible = false
 metadata/_edit_use_anchors_ = true
 
 [node name="Camera3D" type="Camera3D" parent="SwordBladeMesh" unique_id=1727162422]
