@@ -9,12 +9,18 @@ using static Godot.WebSocketPeer;
 public partial class SwordGeneration : Node3D
 {
     private HSlider lengthSlider;
-    private Button genButton;
-    public Array<Vector2> SpinePositions;
-    public Array<Vector2> crossSecPositions;
+    private HSlider depthSlider;
+    private HSlider widthSlider;
+
     private float bladeLength;
     private float bladeWidth;
-    private float bladeHeight;
+    private float bladeDepth;
+
+    private Button genButton;
+    private Button clearButton;
+    public Array<Vector2> SpinePositions;
+    public Array<Vector2> crossSecPositions;
+    
     bool isSwordCurved = false;
     public int numCrossSec = 10;
 
@@ -35,10 +41,12 @@ public partial class SwordGeneration : Node3D
     {
 
         lengthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/LengthSlider");
+        depthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/DepthSlider");
+        widthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/WidthSlider");
         //test parameters will be set using sliders in the future
         bladeLength = 2.0f;
-        bladeHeight = 1.105f;
-        bladeWidth = 0.1f;
+        bladeDepth = 0.1f;
+        bladeWidth = 0.2f;
 
         surfaceArray.Resize((int)Mesh.ArrayType.Max);
         List<Vector3> verts = [];
@@ -47,23 +55,22 @@ public partial class SwordGeneration : Node3D
         List<int> indices = [];
 
         genButton = GetNode<Button>("./SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/buttonContainer/GenerateButton");
+        clearButton = GetNode<Button>("./SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/buttonContainer/ClearButton");
         genButton.Pressed += generatePressed;
-
-       
+        //clearButton.Pressed += clearMeshData;
 
         //sets 2D arrays for Spline and cross section shapes
         SpinePositions = new Array<Vector2>();
         crossSecPositions = new Array<Vector2>();
 
-        //function called currently on applicattion start but will be set to button press
-        //generatePressed();
-        //generateMesh((4 /*SpinePositions, crossSecPositions*/));
-        
     }
 
     public override void _Process(double delta)
     {
         bladeLength = (float)lengthSlider.Value;
+        bladeDepth = (float)depthSlider.Value;
+        bladeWidth = (float)widthSlider.Value;
+
     }
 
     private void generatePressed()
@@ -89,7 +96,7 @@ public partial class SwordGeneration : Node3D
         if (sword == SwordType.STRSWORD)
         {
             createBladeSpine(bladeLength);
-            createStraightSword2DArray(numCrossSec, bladeWidth, bladeHeight,0.2f);
+            createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth,0.2f);
 
         }
 
@@ -146,12 +153,12 @@ public partial class SwordGeneration : Node3D
 
     }
 
-    //creates diamond shape for cross section of sword for each spine point with paer towards tip
+//creates diamond shape for cross section of sword for each spine point with paer towards tip
     private void createStraightSword2DArray(int crossSections, float width, float height, float taperLength)
     {
         //start 4 points of blade to be adapted to 12 later to allow tunable sharpness and fuller
         float shapeWidth = width / 2;
-        float shapeHeight = width / 2;
+        float shapeHeight = height / 2;
 
         for (int i = 0; i < crossSections + 1; i++)
         {
@@ -253,7 +260,9 @@ public partial class SwordGeneration : Node3D
         
         AddChild(meshInstance);
     }
-}   
+
+    
+}
 
 
 

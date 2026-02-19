@@ -88,12 +88,12 @@ theme = ExtResource("1_xcj4p")
 theme_override_font_sizes/font_size = 30
 text = "Blade Depth"
 
-[node name="WidthSlider" type="HSlider" parent="sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer" unique_id=1850893606]
+[node name="DepthSlider" type="HSlider" parent="sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer" unique_id=1850893606]
 layout_mode = 2
-min_value = 0.1
-max_value = 0.5
-step = 0.05
-value = 0.15000000000000002
+min_value = 0.02
+max_value = 0.6
+step = 0.02
+value = 0.16999999999999998
 
 [node name="BladeW" type="Label" parent="sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer" unique_id=1344071822]
 layout_mode = 2
@@ -101,10 +101,10 @@ theme = ExtResource("1_xcj4p")
 theme_override_font_sizes/font_size = 30
 text = "Blade Width"
 
-[node name="WidthSlider2" type="HSlider" parent="sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer" unique_id=95069545]
+[node name="WidthSlider" type="HSlider" parent="sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer" unique_id=95069545]
 layout_mode = 2
 min_value = 0.1
-max_value = 0.5
+max_value = 0.4
 step = 0.05
 value = 0.15000000000000002
 
@@ -225,7 +225,11 @@ text = "Generate"
 
 [node name="Button2" type="Button" parent="sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/buttonContainer" unique_id=339809256]
 layout_mode = 2
-text = "Save Model"
+text = "Save"
+
+[node name="ClearButton" type="Button" parent="sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/buttonContainer" unique_id=514842113]
+layout_mode = 2
+text = "Clear"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="sidebar/MarginContainer/HBoxContainer" unique_id=101154910]
 layout_mode = 2
