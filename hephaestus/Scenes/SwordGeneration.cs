@@ -57,7 +57,7 @@ public partial class SwordGeneration : Node3D
         genButton = GetNode<Button>("./SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/buttonContainer/GenerateButton");
         clearButton = GetNode<Button>("./SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/buttonContainer/ClearButton");
         genButton.Pressed += generatePressed;
-        //clearButton.Pressed += clearMeshData;
+        clearButton.Pressed += clearMeshData;
 
         //sets 2D arrays for Spline and cross section shapes
         SpinePositions = new Array<Vector2>();
@@ -146,6 +146,14 @@ public partial class SwordGeneration : Node3D
         {
             SpinePositions.Add(new Vector2((float)(i * spacing), 0));
         }
+    }
+
+    private void clearMeshData()
+    {
+        SpinePositions.Clear();
+        crossSecPositions.Clear();
+        MeshInstance3D meshToBeCleared = GetChild<MeshInstance3D>(2);
+        meshToBeCleared.QueueFree();
     }
 
     private void curvedSpine()
