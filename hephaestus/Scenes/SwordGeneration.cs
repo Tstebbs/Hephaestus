@@ -11,16 +11,21 @@ public partial class SwordGeneration : Node3D
     private HSlider lengthSlider;
     private HSlider depthSlider;
     private HSlider widthSlider;
+    private HSlider taperSlider;
 
     private float bladeLength;
     private float bladeWidth;
     private float bladeDepth;
+    private float bladeTaper;
 
     private Button genButton;
     private Button clearButton;
     public Array<Vector2> SpinePositions;
     public Array<Vector2> crossSecPositions;
     
+    public MeshInstance3D currMesh;
+
+
     bool isSwordCurved = false;
     public int numCrossSec = 10;
 
@@ -43,10 +48,12 @@ public partial class SwordGeneration : Node3D
         lengthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/LengthSlider");
         depthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/DepthSlider");
         widthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/WidthSlider");
+        taperSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/TaperSlider");
         //test parameters will be set using sliders in the future
         bladeLength = 2.0f;
         bladeDepth = 0.1f;
         bladeWidth = 0.2f;
+        bladeTaper = 0;
 
         surfaceArray.Resize((int)Mesh.ArrayType.Max);
         List<Vector3> verts = [];
@@ -63,6 +70,8 @@ public partial class SwordGeneration : Node3D
         SpinePositions = new Array<Vector2>();
         crossSecPositions = new Array<Vector2>();
 
+        
+
     }
 
     public override void _Process(double delta)
@@ -70,11 +79,13 @@ public partial class SwordGeneration : Node3D
         bladeLength = (float)lengthSlider.Value;
         bladeDepth = (float)depthSlider.Value;
         bladeWidth = (float)widthSlider.Value;
+        bladeTaper = (float)taperSlider.Value;
 
     }
 
     private void generatePressed()
     {
+        
         GD.Print("pressed!!");
         //takes Parameters and determine sword type
         setSwordType();
@@ -86,6 +97,12 @@ public partial class SwordGeneration : Node3D
 
     private void GenerateSwordType(SwordType sword)
     {
+        //if (currMesh!=null)
+        //{
+        //    clearMeshData();
+        //}
+        
+       
         //unimplmented function call for curved swords
         if (isSwordCurved == true)
         {
@@ -96,7 +113,7 @@ public partial class SwordGeneration : Node3D
         if (sword == SwordType.STRSWORD)
         {
             createBladeSpine(bladeLength);
-            createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth,0.2f);
+            createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper);
 
         }
 
@@ -152,8 +169,7 @@ public partial class SwordGeneration : Node3D
     {
         SpinePositions.Clear();
         crossSecPositions.Clear();
-        MeshInstance3D meshToBeCleared = GetChild<MeshInstance3D>(2);
-        meshToBeCleared.QueueFree();
+        currMesh.QueueFree();
     }
 
     private void curvedSpine()
@@ -165,11 +181,32 @@ public partial class SwordGeneration : Node3D
     private void createStraightSword2DArray(int crossSections, float width, float height, float taperLength)
     {
         //start 4 points of blade to be adapted to 12 later to allow tunable sharpness and fuller
+
+        float endTaper=height;
+
+        if (taperLength > 0)
+        {
+            endTaper = height * ((1 - taperLength));
+        }
+        
         float shapeWidth = width / 2;
         float shapeHeight = height / 2;
-
+        float currPoint = 0;
         for (int i = 0; i < crossSections + 1; i++)
         {
+
+            if (taperLength > 0)
+            {
+              if(i!=0)
+              {
+                 currPoint = crossSections / i;
+              }
+                
+                //lerps
+                float currentHeight = height + (endTaper - height) * currPoint;
+                
+            }
+
             //adds 2d cross section
             if (i == crossSections)
             {
@@ -267,6 +304,9 @@ public partial class SwordGeneration : Node3D
         meshInstance.Mesh = arrMesh;
         
         AddChild(meshInstance);
+        currMesh = GetChild<MeshInstance3D>(2);
+
+        //currMesh.position(currMesh.position().X + 5, 0, 0);
     }
 
     
