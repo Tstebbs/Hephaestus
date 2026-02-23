@@ -192,6 +192,8 @@ public partial class SwordGeneration : Node3D
         float shapeWidth = width / 2;
         float shapeHeight = height / 2;
         float currPoint = 0;
+        float currentHeight = shapeHeight;
+
         for (int i = 0; i < crossSections + 1; i++)
         {
 
@@ -199,25 +201,25 @@ public partial class SwordGeneration : Node3D
             {
               if(i!=0)
               {
-                 currPoint = crossSections / i;
+                 currPoint = (float) i/crossSections;
               }
                 
                 //lerps
-                float currentHeight = height + (endTaper - height) * currPoint;
+                currentHeight = (height + (endTaper - height) * currPoint)/2;
                 
             }
 
             //adds 2d cross section
             if (i == crossSections)
             {
-                shapeHeight = 0;
-                shapeHeight = 0;
+                currentHeight = 0;
+                shapeWidth = 0;
             }
             
             crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
-            crossSecPositions.Add(new Vector2(0, 0 - shapeHeight));
+            crossSecPositions.Add(new Vector2(0, 0 - currentHeight));
             crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
-            crossSecPositions.Add(new Vector2(0, 0 + shapeHeight));
+            crossSecPositions.Add(new Vector2(0, 0 + currentHeight));
             
             // tapers point
             if (i >= 8)
