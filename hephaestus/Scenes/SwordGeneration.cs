@@ -25,13 +25,11 @@ public partial class SwordGeneration : Node3D
     
     public MeshInstance3D currMesh;
 
-
     bool isSwordCurved = false;
     public int numCrossSec = 10;
 
     Godot.Collections.Array surfaceArray = [];
-    
-
+   
     public enum SwordType
     {
         STRSWORD,
@@ -70,8 +68,6 @@ public partial class SwordGeneration : Node3D
         SpinePositions = new Array<Vector2>();
         crossSecPositions = new Array<Vector2>();
 
-        
-
     }
 
     public override void _Process(double delta)
@@ -97,16 +93,16 @@ public partial class SwordGeneration : Node3D
 
     private void GenerateSwordType(SwordType sword)
     {
-        //if (currMesh!=null)
-        //{
-        //    clearMeshData();
-        //}
-        
-       
+        if (GetChild<MeshInstance3D>(2)!=null) 
+        {
+            clearMeshData();
+        }
+
+
         //unimplmented function call for curved swords
         if (isSwordCurved == true)
         {
-            curvedSpine();
+            curvedSpine(bladeLength);
         }
 
         //staight sword point generation
@@ -172,9 +168,13 @@ public partial class SwordGeneration : Node3D
         currMesh.QueueFree();
     }
 
-    private void curvedSpine()
+    private void curvedSpine(float length)
     {
-
+        float spacing = length / numCrossSec;
+        for (int i = 0; i < 11; i++)
+        {
+            SpinePositions.Add(new Vector2((float)(i * spacing), i));
+        }
     }
 
 //creates diamond shape for cross section of sword for each spine point with paer towards tip
@@ -297,8 +297,6 @@ public partial class SwordGeneration : Node3D
 
         if (arrMesh != null)
         {
-            // Create mesh surface from mesh array
-            // No blendshapes, lods, or compression used.
             arrMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
         }
 
@@ -308,7 +306,7 @@ public partial class SwordGeneration : Node3D
         AddChild(meshInstance);
         currMesh = GetChild<MeshInstance3D>(2);
 
-        //currMesh.position(currMesh.position().X + 5, 0, 0);
+        
     }
 
     
