@@ -12,11 +12,21 @@ public partial class SwordGeneration : Node3D
     private HSlider depthSlider;
     private HSlider widthSlider;
     private HSlider taperSlider;
+    private HSlider fullerWSlider;
+    private HSlider fullerHSlider;
+    private HSlider fullerDSlider;
 
+    //blade variables
     private float bladeLength;
     private float bladeWidth;
     private float bladeDepth;
     private float bladeTaper;
+    //point v
+    private float pointLength;
+    //fuller variables
+    private float fullerWidth;
+    private float fullerDepth;
+    private float fullerTaper;
 
     private Button genButton;
     private Button clearButton;
@@ -47,6 +57,11 @@ public partial class SwordGeneration : Node3D
         depthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/DepthSlider");
         widthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/WidthSlider");
         taperSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/TaperSlider");
+
+        fullerWSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/fullerWSlider");
+        fullerHSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/fullerLSlider");
+        fullerDSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/fullerDSlider");
+
         //test parameters will be set using sliders in the future
         bladeLength = 2.0f;
         bladeDepth = 0.1f;
@@ -97,7 +112,6 @@ public partial class SwordGeneration : Node3D
         {
             clearMeshData();
         }
-
 
         //unimplmented function call for curved swords
         if (isSwordCurved == true)
