@@ -26,7 +26,7 @@ public partial class SwordGeneration : Node3D
     //fuller variables
     private float fullerWidth;
     private float fullerDepth;
-    private float fullerTaper;
+    private float fullerLength;
 
     private Button genButton;
     private Button clearButton;
@@ -62,11 +62,16 @@ public partial class SwordGeneration : Node3D
         fullerHSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/fullerLSlider");
         fullerDSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/fullerDSlider");
 
-        //test parameters will be set using sliders in the future
+        //base parameters
         bladeLength = 2.0f;
         bladeDepth = 0.1f;
         bladeWidth = 0.2f;
         bladeTaper = 0;
+
+        //fuller params 
+        fullerWidth=0;
+        fullerDepth=0;
+        fullerLength = 0;
 
         surfaceArray.Resize((int)Mesh.ArrayType.Max);
         List<Vector3> verts = [];
@@ -91,6 +96,10 @@ public partial class SwordGeneration : Node3D
         bladeDepth = (float)depthSlider.Value;
         bladeWidth = (float)widthSlider.Value;
         bladeTaper = (float)taperSlider.Value;
+
+        fullerWidth = (float)fullerWSlider.Value;
+        fullerDepth = (float)fullerDSlider.Value;
+        fullerLength= (float)fullerHSlider.Value;
 
     }
 
@@ -123,22 +132,22 @@ public partial class SwordGeneration : Node3D
         if (sword == SwordType.STRSWORD)
         {
             createBladeSpine(bladeLength);
-            createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper);
+            createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth,fullerLength, fullerDepth);
 
         }
 
         //Output code to showcase cross section points for each spine point
-        int count = 0;
-        for (int i = 0; i < 11; i++)
-        {
-            GD.Print(i, SpinePositions[i]);
-            for (int j = 0; j < 4; j++)
-            {
+        //int count = 0;
+        //for (int i = 0; i < 11; i++)
+        //{
+        //    GD.Print(i, SpinePositions[i]);
+        //    for (int j = 0; j < 4; j++)
+        //    {
 
-                GD.Print(" cross section 4 ", j, " X ", crossSecPositions[count].X, " Y ", crossSecPositions[count].Y);
-                count++;
-            }
-        }
+        //        GD.Print(" cross section 4 ", j, " X ", crossSecPositions[count].X, " Y ", crossSecPositions[count].Y);
+        //        count++;
+        //    }
+        //}
     }
 
     private void setSwordType()
@@ -191,11 +200,10 @@ public partial class SwordGeneration : Node3D
         }
     }
 
-//creates diamond shape for cross section of sword for each spine point with paer towards tip
-    private void createStraightSword2DArray(int crossSections, float width, float height, float taperLength)
+    //creates diamond shape for cross section of sword for each spine point with paer towards tip
+    private void createStraightSword2DArray(int crossSections, float width, float height, float taperLength, float fullerWidth, float fullerLength, float fullerDepth)
     {
         //start 4 points of blade to be adapted to 12 later to allow tunable sharpness and fuller
-
         float endTaper=height;
 
         if (taperLength > 0)
@@ -211,17 +219,15 @@ public partial class SwordGeneration : Node3D
         for (int i = 0; i < crossSections + 1; i++)
         {
 
-            if (taperLength > 0)
+            if(i!=0)
             {
-              if(i!=0)
-              {
                  currPoint = (float) i/crossSections;
-              }
-                
-                //lerps
-                currentHeight = (height + (endTaper - height) * currPoint)/2;
-                
             }
+                
+            //lerps for taper
+            currentHeight = (height + (endTaper - height) * currPoint)/2;
+                
+            
 
             //adds 2d cross section
             if (i == crossSections)
@@ -229,11 +235,27 @@ public partial class SwordGeneration : Node3D
                 currentHeight = 0;
                 shapeWidth = 0;
             }
-            
-            crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
-            crossSecPositions.Add(new Vector2(0, 0 - currentHeight));
-            crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
-            crossSecPositions.Add(new Vector2(0, 0 + currentHeight));
+
+
+            if (fullerLength > 0)
+            {
+                GD.Print("fuller?");
+                crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
+                crossSecPositions.Add(new Vector2(0-shapeWidth+fullerWidth/2, 0 - currentHeight));
+                crossSecPositions.Add(new Vector2(0+shapeWidth- fullerWidth / 2, 0 - currentHeight));
+                crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
+                crossSecPositions.Add(new Vector2(0 + shapeWidth - fullerWidth / 2, 0 + currentHeight));
+                crossSecPositions.Add(new Vector2(0 - shapeWidth + fullerWidth / 2,0 + currentHeight));
+            }
+            else
+            {
+                crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
+                crossSecPositions.Add(new Vector2(0, 0 - currentHeight));
+                crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
+                crossSecPositions.Add(new Vector2(0, 0 + currentHeight));
+            }
+
+                
             
             // tapers point
             if (i >= 8)
