@@ -112,7 +112,8 @@ public partial class SwordGeneration : Node3D
 
         //takes sword type to generate
         GenerateSwordType(currSword);
-        generateMesh((4 /*SpinePositions, crossSecPositions*/));
+
+        generateMesh((6 /*SpinePositions, crossSecPositions*/));
     }
 
     private void GenerateSwordType(SwordType sword)
@@ -289,7 +290,6 @@ public partial class SwordGeneration : Node3D
         {
             float v = ((float)i) / crossSections;
         
-
             // Loop over points per cross section
             for (int j = 0; j < crossSecPoints; j++)
             {
@@ -298,7 +298,9 @@ public partial class SwordGeneration : Node3D
                 Vector3 vert = new Vector3(crossSecPositions[i * crossSecPoints + j].X, crossSecPositions[i * crossSecPoints + j].Y, SpinePositions[i].X);
                 GD.Print(vert);
                 verts.Add(vert);
-                normals.Add(vert.Normalized());
+                Vector3 center =   new Vector3(SpinePositions[i].X, SpinePositions[i].Y,0);
+                Vector3 normal = (vert - center).Normalized();
+                normals.Add(normal);
                 uvs.Add(new Vector2(u, v));
                 point += 1;
 
@@ -314,6 +316,8 @@ public partial class SwordGeneration : Node3D
                     indices.Add(prevRow + nextRow);
                     indices.Add(thisRow + j);
                     indices.Add(thisRow + nextRow);
+
+                    //normal calc 
 
                 }
               
@@ -334,6 +338,7 @@ public partial class SwordGeneration : Node3D
         if (arrMesh != null)
         {
             arrMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
+            //arrMesh.generateNormals();
         }
 
         MeshInstance3D meshInstance = new MeshInstance3D();
