@@ -28,6 +28,7 @@ public partial class SwordGeneration : Node3D
 	private float fullerDepth;
 	private float fullerLength;
 
+	private int numofPointsPerCs=4;
 	private Button genButton;
 	private Button clearButton;
 	public Array<Vector2> SpinePositions;
@@ -36,10 +37,9 @@ public partial class SwordGeneration : Node3D
 	public MeshInstance3D currMesh;
 
 	bool isSwordCurved = false;
-	public int numCrossSec = 4;
+	public int numCrossSec = 10;
 
-	Godot.Collections.Array surfaceArray = [];
-   
+	Godot.Collections.Array surfaceArray = [];   
 	public enum SwordType
 	{
 		STRSWORD,
@@ -113,7 +113,7 @@ public partial class SwordGeneration : Node3D
 		//takes sword type to generate
 		GenerateSwordType(currSword);
 
-		generateMesh((6 /*SpinePositions, crossSecPositions*/));
+		generateMesh(numofPointsPerCs /*SpinePositions, crossSecPositions*/);
 	}
 
 	private void GenerateSwordType(SwordType sword)
@@ -155,14 +155,14 @@ public partial class SwordGeneration : Node3D
 	{
 		if (isSwordCurved == true)
 		{
-			if (bladeWidth <= 0.1f)
-			{
-				currSword = SwordType.KATANA;
-			}
-			else
-			{
-				//other curved sword
-			}
+			//if (bladeWidth <= 0.1f)
+			//{
+			//	currSword = SwordType.KATANA;
+			//}
+			//else
+			//{
+			//	//other curved sword
+			//}
 		}
 		else if (bladeLength > 20)
 		{
@@ -201,8 +201,9 @@ public partial class SwordGeneration : Node3D
 		}
 	}
 
-	//creates diamond shape for cross section of sword for each spine point with paer towards tip
-	private void createStraightSword2DArray(int crossSections, float width, float height, float taperLength, float fullerWidth, float fullerLength, float fullerDepth)
+    //creates diamond shape for cross section of sword for each spine point with paer towards tip
+    //numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth,fullerLength, fullerDepth
+    private void createStraightSword2DArray(int crossSections, float width, float height, float taperLength, float fullerWidth, float fullerLength, float fullerDepth)
 	{
 		//start 4 points of blade to be adapted to 12 later to allow tunable sharpness and fuller
 		float endTaper=height;
@@ -216,6 +217,8 @@ public partial class SwordGeneration : Node3D
 		float shapeHeight = height / 2;
 		float currPoint = 0;
 		float currentHeight = shapeHeight;
+		float fWidth = fullerWidth / 2;
+		
 
 		for (int i = 0; i < crossSections + 1; i++)
 		{
@@ -236,12 +239,13 @@ public partial class SwordGeneration : Node3D
 				currentHeight = 0;
 				shapeWidth = 0;
 			}
-
+			
 
 			if (fullerLength > 0)
 			{
 				GD.Print("fuller?");
-				crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
+                numofPointsPerCs = 6;
+                crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
 				crossSecPositions.Add(new Vector2(0-shapeWidth+fullerWidth/2, 0 - currentHeight));
 				crossSecPositions.Add(new Vector2(0+shapeWidth- fullerWidth / 2, 0 - currentHeight));
 				crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
