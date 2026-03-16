@@ -1,14 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Uni Abertay\\Uni work\\Y4\\CMP 400\\Repos\\Hephaestus\\hephaestus\\",
+  "WorkspaceRootPath": "M:\\Hons\\repo\\Hephaestus\\hephaestus\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|d:\\uni abertay\\uni work\\y4\\cmp 400\\repos\\hephaestus\\hephaestus\\scenes\\swordgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|m:\\hons\\repo\\hephaestus\\hephaestus\\scenes\\swordgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|solutionrelative:scenes\\swordgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|d:\\uni abertay\\uni work\\y4\\cmp 400\\repos\\hephaestus\\hephaestus\\scenes\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|solutionrelative:scenes\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|m:\\hons\\repo\\hephaestus\\hephaestus\\scenes\\freelookcamerabase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|solutionrelative:scenes\\freelookcamerabase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|m:\\hons\\repo\\hephaestus\\hephaestus\\scenes\\freelookcamera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|solutionrelative:scenes\\freelookcamera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,42 +22,46 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Main.cs",
-              "DocumentMoniker": "D:\\Uni Abertay\\Uni work\\Y4\\CMP 400\\Repos\\Hephaestus\\hephaestus\\Scenes\\Main.cs",
-              "RelativeDocumentMoniker": "Scenes\\Main.cs",
-              "ToolTip": "D:\\Uni Abertay\\Uni work\\Y4\\CMP 400\\Repos\\Hephaestus\\hephaestus\\Scenes\\Main.cs",
-              "RelativeToolTip": "Scenes\\Main.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-17T16:08:25.842Z"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "SwordGeneration.cs",
-              "DocumentMoniker": "D:\\Uni Abertay\\Uni work\\Y4\\CMP 400\\Repos\\Hephaestus\\hephaestus\\Scenes\\SwordGeneration.cs",
+              "DocumentMoniker": "M:\\Hons\\repo\\Hephaestus\\hephaestus\\Scenes\\SwordGeneration.cs",
               "RelativeDocumentMoniker": "Scenes\\SwordGeneration.cs",
-              "ToolTip": "D:\\Uni Abertay\\Uni work\\Y4\\CMP 400\\Repos\\Hephaestus\\hephaestus\\Scenes\\SwordGeneration.cs",
+              "ToolTip": "M:\\Hons\\repo\\Hephaestus\\hephaestus\\Scenes\\SwordGeneration.cs",
               "RelativeToolTip": "Scenes\\SwordGeneration.cs",
+              "ViewState": "AgIAAMIAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-16T10:45:25.409Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FreeLookCameraBase.cs",
+              "DocumentMoniker": "M:\\Hons\\repo\\Hephaestus\\hephaestus\\Scenes\\FreeLookCameraBase.cs",
+              "RelativeDocumentMoniker": "Scenes\\FreeLookCameraBase.cs",
+              "ToolTip": "M:\\Hons\\repo\\Hephaestus\\hephaestus\\Scenes\\FreeLookCameraBase.cs",
+              "RelativeToolTip": "Scenes\\FreeLookCameraBase.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T16:14:11.719Z",
+              "WhenOpened": "2026-03-16T10:43:11.349Z",
               "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 240,
-          "SelectedChildIndex": -1,
-          "Children": [
+            },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FreeLookCamera.cs",
+              "DocumentMoniker": "M:\\Hons\\repo\\Hephaestus\\hephaestus\\Scenes\\FreeLookCamera.cs",
+              "RelativeDocumentMoniker": "Scenes\\FreeLookCamera.cs",
+              "ToolTip": "M:\\Hons\\repo\\Hephaestus\\hephaestus\\Scenes\\FreeLookCamera.cs",
+              "RelativeToolTip": "Scenes\\FreeLookCamera.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-16T10:31:14.133Z",
+              "EditorCaption": ""
             }
           ]
         }
