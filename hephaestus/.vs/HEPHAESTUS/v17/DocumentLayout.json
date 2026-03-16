@@ -1,10 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\uni\\Honours Work\\Repo\\Hephaestus\\hephaestus\\",
+  "WorkspaceRootPath": "D:\\LocalWorkDir\\2201393\\New folder\\Hephaestus\\hephaestus\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\uni\\Honours Work\\Repo\\Hephaestus\\hephaestus\\Scenes\\SwordGeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Scenes\\SwordGeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|d:\\localworkdir\\2201393\\new folder\\hephaestus\\hephaestus\\scenes\\swordgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|solutionrelative:scenes\\swordgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -20,11 +20,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "SwordGeneration.cs",
-              "DocumentMoniker": "C:\\uni\\Honours Work\\Repo\\Hephaestus\\hephaestus\\Scenes\\SwordGeneration.cs",
+              "DocumentMoniker": "D:\\LocalWorkDir\\2201393\\New folder\\Hephaestus\\hephaestus\\Scenes\\SwordGeneration.cs",
               "RelativeDocumentMoniker": "Scenes\\SwordGeneration.cs",
-              "ToolTip": "C:\\uni\\Honours Work\\Repo\\Hephaestus\\hephaestus\\Scenes\\SwordGeneration.cs",
+              "ToolTip": "D:\\LocalWorkDir\\2201393\\New folder\\Hephaestus\\hephaestus\\Scenes\\SwordGeneration.cs",
               "RelativeToolTip": "Scenes\\SwordGeneration.cs",
-              "ViewState": "AgIAAIQAAAAAAAAAAAAcwIkAAAADAAAAAAAAAA==",
+              "ViewState": "AgIAAOMAAAAAAAAAAAAAAP4AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-16T11:01:41.016Z",
               "EditorCaption": ""
