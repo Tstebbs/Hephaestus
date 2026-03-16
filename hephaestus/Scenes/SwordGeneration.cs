@@ -36,7 +36,7 @@ public partial class SwordGeneration : Node3D
 	public MeshInstance3D currMesh;
 
 	bool isSwordCurved = false;
-	public int numCrossSec = 10;
+	public int numCrossSec = 4;
 
 	Godot.Collections.Array surfaceArray = [];
    
