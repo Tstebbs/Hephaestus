@@ -45,7 +45,8 @@ public partial class SwordGeneration : Node3D
 		STRSWORD,
 		GRTSWORD,
 		KATANA,
-		CUTLASS
+		CUTLASS,
+		RAPIER
 	}
 
 	public SwordType currSword;
@@ -133,23 +134,30 @@ public partial class SwordGeneration : Node3D
 		if (sword == SwordType.STRSWORD)
 		{
 			createBladeSpine(bladeLength);
-			createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth,fullerLength, fullerDepth);
-
+			//createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth,fullerLength, fullerDepth);
+			createThrustingSword(numCrossSec, bladeWidth, bladeDepth, bladeTaper);
 		}
 
-		//Output code to showcase cross section points for each spine point
-		//int count = 0;
-		//for (int i = 0; i < 11; i++)
-		//{
-		//    GD.Print(i, SpinePositions[i]);
-		//    for (int j = 0; j < 4; j++)
-		//    {
+        if (sword == SwordType.RAPIER)
+        {
+            createBladeSpine(bladeLength);
+            //createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth, fullerLength, fullerDepth);
+            createThrustingSword(numCrossSec, bladeWidth, bladeDepth, bladeTaper);
+        }
 
-		//        GD.Print(" cross section 4 ", j, " X ", crossSecPositions[count].X, " Y ", crossSecPositions[count].Y);
-		//        count++;
-		//    }
-		//}
-	}
+        //Output code to showcase cross section points for each spine point
+        //int count = 0;
+        //for (int i = 0; i < 11; i++)
+        //{
+        //    GD.Print(i, SpinePositions[i]);
+        //    for (int j = 0; j < 4; j++)
+        //    {
+
+        //        GD.Print(" cross section 4 ", j, " X ", crossSecPositions[count].X, " Y ", crossSecPositions[count].Y);
+        //        count++;
+        //    }
+        //}
+    }
 
 	private void setSwordType()
 	{
@@ -239,19 +247,26 @@ public partial class SwordGeneration : Node3D
 				currentHeight = 0;
 				shapeWidth = 0;
 			}
-			
 
-			if (fullerLength > 0)
+            if (i >= 8)
+            {
+                shapeWidth = shapeWidth / 2f;
+                shapeHeight = shapeHeight / 1.2f;
+            }
+
+
+            if (fullerLength > 0)
 			{
 				GD.Print("fuller?");
                 numofPointsPerCs = 6;
-                crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
-				crossSecPositions.Add(new Vector2(0-shapeWidth+fullerWidth/2, 0 - currentHeight));
-				crossSecPositions.Add(new Vector2(0+shapeWidth- fullerWidth / 2, 0 - currentHeight));
-				crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
-				crossSecPositions.Add(new Vector2(0 + shapeWidth - fullerWidth / 2, 0 + currentHeight));
-				crossSecPositions.Add(new Vector2(0 - shapeWidth + fullerWidth / 2,0 + currentHeight));
-			}
+                crossSecPositions.Add(new Vector2(0 - shapeWidth, 0 + fWidth));
+                crossSecPositions.Add(new Vector2(0 - shapeWidth, 0-fWidth));
+                crossSecPositions.Add(new Vector2(0, 0 - currentHeight));
+                crossSecPositions.Add(new Vector2(0 + shapeWidth, 0-fWidth));
+                crossSecPositions.Add(new Vector2(0 + shapeWidth, 0 + fWidth));
+                crossSecPositions.Add(new Vector2(0, 0 + currentHeight));
+
+            }
 			else
 			{
 				crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
@@ -263,16 +278,83 @@ public partial class SwordGeneration : Node3D
 				
 			
 			// tapers point
-			if (i >= 8)
-			{
-				shapeWidth = shapeWidth / 2f;
-				shapeHeight = shapeHeight / 1.2f;
-			}
+			
 		}
 	}
 
- 
-	private void generateMesh(int crossSecPoints/*, godot_array bladeVertices, godot_array bladeIndices*/)
+    private void createThrustingSword(int crossSections, float width, float height, float taperLength)
+    {
+        //start 4 points of blade to be adapted to 12 later to allow tunable sharpness and fuller
+        float endTaper = height;
+
+        if (taperLength > 0)
+        {
+            endTaper = height * ((1 - taperLength));
+        }
+
+        float shapeWidth = width / 2;
+        float shapeHeight = height / 2;
+        float currPoint = 0;
+        float currentHeight = shapeHeight;
+   
+
+        for (int i = 0; i < crossSections + 1; i++)
+        {
+
+            if (i != 0)
+            {
+                currPoint = (float)i / crossSections;
+            }
+
+            //lerps for taper
+            currentHeight = (height + (endTaper - height) * currPoint) / 2;
+
+            //adds 2d cross section
+            if (i == crossSections)
+            {
+                currentHeight = 0;
+                shapeWidth = 0;
+            }
+
+            if (i >= 8)
+            {
+                shapeWidth = shapeWidth / 2f;
+                shapeHeight = shapeHeight / 1.2f;
+            }
+
+            numofPointsPerCs = 12;
+
+			for(int k=0;k< numofPointsPerCs;k++)
+			{
+				double angle = (k * 30) * Math.PI / 180;
+                crossSecPositions.Add(new Vector2((float)(0 - (currentHeight*Math.Cos(angle))),(float)( 0+(currentHeight * Math.Sin(angle)))));
+            }
+
+            //crossSecPositions.Add(new Vector2(0 - (shapeWidth / 3 * 2), 0 + currentHeight / 3));
+            //crossSecPositions.Add(new Vector2(0 - (shapeWidth/3*2), 0+currentHeight/3));
+            //crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
+            //crossSecPositions.Add(new Vector2(0 - (shapeWidth/3*2), 0 - currentHeight / 3));
+
+            //crossSecPositions.Add(new Vector2(0 - (shapeWidth / 3), 0 - currentHeight / 3*2));
+            //crossSecPositions.Add(new Vector2(0, 0 - currentHeight));
+            //crossSecPositions.Add(new Vector2(0 + (shapeWidth / 3), 0 - currentHeight / 3 * 2));
+
+
+            //crossSecPositions.Add(new Vector2(0 + (shapeWidth / 3 * 2), 0 - currentHeight / 3));
+            //crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
+            //crossSecPositions.Add(new Vector2(0 + (shapeWidth / 3 * 2), 0 + currentHeight / 3));
+
+            //crossSecPositions.Add(new Vector2(0 + (shapeWidth / 3), 0 + currentHeight / 3 * 2));
+            //crossSecPositions.Add(new Vector2(0, 0 + currentHeight));
+            //crossSecPositions.Add(new Vector2(0 - (shapeWidth / 3), 0 + currentHeight / 3 * 2));
+
+
+
+        }
+    }
+
+
+    private void generateMesh(int crossSecPoints/*, godot_array bladeVertices, godot_array bladeIndices*/)
 	{
 		int crossSections = 11;
 		Godot.Collections.Array surfaceArray = [];
@@ -321,7 +403,6 @@ public partial class SwordGeneration : Node3D
 					indices.Add(thisRow + j);
 					indices.Add(thisRow + nextRow);
 
-					//normal calc 
 
 				}
 			  
