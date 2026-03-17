@@ -15,9 +15,10 @@ public partial class SwordGeneration : Node3D
 	private HSlider fullerWSlider;
 	private HSlider fullerHSlider;
 	private HSlider fullerDSlider;
+    private HSlider edgesSlider;
 
-	//blade variables
-	private float bladeLength;
+    //blade variables
+    private float bladeLength;
 	private float bladeWidth;
 	private float bladeDepth;
 	private float bladeTaper;
@@ -27,6 +28,7 @@ public partial class SwordGeneration : Node3D
 	private float fullerWidth;
 	private float fullerDepth;
 	private float fullerLength;
+	private float edges;
 
 	private int numofPointsPerCs=4;
 	private Button genButton;
@@ -63,8 +65,9 @@ public partial class SwordGeneration : Node3D
 		fullerHSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/fullerLSlider");
 		fullerDSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/fullerDSlider");
 
-		//base parameters
-		bladeLength = 2.0f;
+		edgesSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/edgesSlider");
+        //base parameters
+        bladeLength = 2.0f;
 		bladeDepth = 0.1f;
 		bladeWidth = 0.2f;
 		bladeTaper = 0;
@@ -102,6 +105,8 @@ public partial class SwordGeneration : Node3D
 		fullerDepth = (float)fullerDSlider.Value;
 		fullerLength= (float)fullerHSlider.Value;
 
+		edges=(float)edgesSlider.Value;
+
 	}
 
 	private void generatePressed()
@@ -113,8 +118,8 @@ public partial class SwordGeneration : Node3D
 
 		//takes sword type to generate
 		GenerateSwordType(currSword);
-
-		generateMesh(numofPointsPerCs /*SpinePositions, crossSecPositions*/);
+        GD.Print(currSword);
+        generateMesh(numofPointsPerCs);
 	}
 
 	private void GenerateSwordType(SwordType sword)
@@ -161,25 +166,35 @@ public partial class SwordGeneration : Node3D
 
 	private void setSwordType()
 	{
-		if (isSwordCurved == true)
+		if(edges==0)
 		{
-			//if (bladeWidth <= 0.1f)
-			//{
-			//	currSword = SwordType.KATANA;
-			//}
-			//else
-			//{
-			//	//other curved sword
-			//}
+			currSword=SwordType.RAPIER;
 		}
-		else if (bladeLength > 20)
+		else if(edges==1) 
 		{
-			currSword = SwordType.GRTSWORD;
-		}
-		else
+
+            //if (bladeWidth <= 0.1f)
+            //	//{
+            //	//	currSword = SwordType.KATANA;
+            //	//}
+            //	//else
+            //	//{
+            //	//	//other curved sword
+            //	//}
+        }
+        else
 		{
-			currSword = SwordType.STRSWORD;
-		}
+            currSword = SwordType.STRSWORD;
+        }
+  //     
+		//else if (bladeLength > 20)
+		//{
+		//	currSword = SwordType.GRTSWORD;
+		//}
+		//else
+		//{
+		//	currSword = SwordType.STRSWORD;
+		//}
 
 	}
 
@@ -260,39 +275,21 @@ public partial class SwordGeneration : Node3D
 			{
 				GD.Print("fuller?");
                 numofPointsPerCs = 6;
-                //crossSecPositions.Add(new Vector2(0 - shapeWidth, 0 + fWidth));
-                //crossSecPositions.Add(new Vector2(0 - shapeWidth, 0-fWidth));
-                //crossSecPositions.Add(new Vector2(0, 0 - currentHeight));
-                //crossSecPositions.Add(new Vector2(0 + shapeWidth, 0-fWidth));
-                //crossSecPositions.Add(new Vector2(0 + shapeWidth, 0 + fWidth));
-                //crossSecPositions.Add(new Vector2(0, 0 + currentHeight));
-
-
-				
-				//crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
-				
-
+              
 				crossSecPositions.Add(new Vector2(0 - (shapeWidth), 0 - currentHeight +fWidth));
 				crossSecPositions.Add(new Vector2(0, 0 - currentHeight));
 				crossSecPositions.Add(new Vector2(0 + (shapeWidth), 0 - currentHeight +fWidth));
-
-
-				
-				
-				
 
 				crossSecPositions.Add(new Vector2(0 + (shapeWidth), 0 + currentHeight - fWidth));
 				crossSecPositions.Add(new Vector2(0, 0 + currentHeight));
 				crossSecPositions.Add(new Vector2(0 - (shapeWidth), 0 + currentHeight - fWidth));
 
 
-
-
-
 			}
             else
 			{
-				crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
+                numofPointsPerCs = 6;
+                crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
 				crossSecPositions.Add(new Vector2(0, 0 - currentHeight));
 				crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
 				crossSecPositions.Add(new Vector2(0, 0 + currentHeight));
@@ -350,7 +347,7 @@ public partial class SwordGeneration : Node3D
 			for(int k=0;k< numofPointsPerCs;k++)
 			{
 				double angle = (k * 30) * Math.PI / 180;
-                crossSecPositions.Add(new Vector2((float)(0 - (currentHeight*Math.Cos(angle))),(float)( 0+(currentHeight * Math.Sin(angle)))));
+                crossSecPositions.Add(new Vector2((float)(0 + (currentHeight*Math.Cos(angle))),(float)( 0+(currentHeight * Math.Sin(angle)))));
             }
 
             //crossSecPositions.Add(new Vector2(0 - (shapeWidth / 3 * 2), 0 + currentHeight / 3));
