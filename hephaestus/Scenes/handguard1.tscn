@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://ddh2u2m5gaa6d"]
+
+[ext_resource type="PackedScene" uid="uid://d206su88qy6se" path="res://Resources/handguards/shguard1/Untitled.glb" id="1_rr6ap"]
+[ext_resource type="Material" uid="uid://bee4x574fjxim" path="res://Resources/materials/metal1/mat.tres" id="2_s3bar"]
+
+[node name="Handguard1" type="Node3D" unique_id=653632352]
+
+[node name="handguardMesh" parent="." unique_id=1665136506 instance=ExtResource("1_rr6ap")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.691355, -0.5219631, 0.42554855)
+
+[node name="Sword" parent="handguardMesh" index="0" unique_id=283750840]
+surface_material_override/0 = ExtResource("2_s3bar")
+
+[editable path="handguardMesh"]
