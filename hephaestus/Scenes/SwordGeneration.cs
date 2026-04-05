@@ -350,29 +350,17 @@ public partial class SwordGeneration : Node3D
                 crossSecPositions.Add(new Vector2((float)(0 + (currentHeight*Math.Cos(angle))),(float)( 0+(currentHeight * Math.Sin(angle)))));
             }
 
-            //crossSecPositions.Add(new Vector2(0 - (shapeWidth / 3 * 2), 0 + currentHeight / 3));
-            //crossSecPositions.Add(new Vector2(0 - (shapeWidth/3*2), 0+currentHeight/3));
-            //crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
-            //crossSecPositions.Add(new Vector2(0 - (shapeWidth/3*2), 0 - currentHeight / 3));
-
-            //crossSecPositions.Add(new Vector2(0 - (shapeWidth / 3), 0 - currentHeight / 3*2));
-            //crossSecPositions.Add(new Vector2(0, 0 - currentHeight));
-            //crossSecPositions.Add(new Vector2(0 + (shapeWidth / 3), 0 - currentHeight / 3 * 2));
-
-
-            //crossSecPositions.Add(new Vector2(0 + (shapeWidth / 3 * 2), 0 - currentHeight / 3));
-            //crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
-            //crossSecPositions.Add(new Vector2(0 + (shapeWidth / 3 * 2), 0 + currentHeight / 3));
-
-            //crossSecPositions.Add(new Vector2(0 + (shapeWidth / 3), 0 + currentHeight / 3 * 2));
-            //crossSecPositions.Add(new Vector2(0, 0 + currentHeight));
-            //crossSecPositions.Add(new Vector2(0 - (shapeWidth / 3), 0 + currentHeight / 3 * 2));
+           
 
 
 
         }
     }
 
+	private void generateVerts(int crossSecPoints/*, godot_array bladeVertices, godot_array bladeIndices*/)
+	{
+
+	}
 
     private void generateMesh(int crossSecPoints/*, godot_array bladeVertices, godot_array bladeIndices*/)
 	{
@@ -387,70 +375,101 @@ public partial class SwordGeneration : Node3D
 		List<int> indices = [];
 
 		// Vertex indices.
-		int thisRow = 0;
-		int prevRow = 0;
 		int point = 0;
 
+        // Loop over rings.
+        for (int i = 0; i < crossSections; i++)
+        {
+            float v = ((float)i) / crossSections;
+
+            // Loop over points per cross section
+            for (int j = 0; j < crossSecPoints; j++)
+            {
+                float u = ((float)j) / crossSecPoints;
+
+                Vector3 vert = new Vector3(crossSecPositions[i * crossSecPoints + j].X, crossSecPositions[i * crossSecPoints + j].Y, SpinePositions[i].X);
+
+                verts.Add(vert);
+                normals.Add(Vector3.Zero);
+                Vector3 center = new Vector3(SpinePositions[i].X, SpinePositions[i].Y, 0);
+
+
+                uvs.Add(new Vector2(u, v));
+                point += 1;
+
+            }
+        }
+
+		
 		// Loop over rings.
 		for (int i = 0; i < crossSections; i++)
 		{
-			float v = ((float)i) / crossSections;
-		
-			// Loop over points per cross section
-			for (int j = 0; j < crossSecPoints; j++)
-			{
-				float u = ((float)j) / crossSecPoints;
-		
-				Vector3 vert = new Vector3(crossSecPositions[i * crossSecPoints + j].X, crossSecPositions[i * crossSecPoints + j].Y, SpinePositions[i].X);
-				GD.Print(vert);
-				verts.Add(vert);
-				Vector3 center =   new Vector3(SpinePositions[i].X, SpinePositions[i].Y,0);
-				Vector3 normal = (vert - center).Normalized();
-				normals.Add(normal);
-				uvs.Add(new Vector2(u, v));
-				point += 1;
+            int prevRow = (i - 1) * crossSecPoints;
+            int thisRow = i * crossSecPoints;
 
+            // Loop over points per cross section
+            for (int j = 0; j < crossSecPoints; j++)
+			{
+				
 				//returns next i
 				int nextRow = (j + 1) % crossSecPoints;
 				// Create triangles in ring using indices.
 				if (i > 0)
 				{
-					indices.Add(prevRow + j );
+                    indices.Add(prevRow + j);
 					indices.Add(thisRow + j);
 					indices.Add(prevRow + nextRow);
+					
+					Vector3 n1 = (verts[thisRow + j] - verts[prevRow + j]).Cross(verts[prevRow + nextRow] - verts[prevRow + j]);
+					
+					normals[prevRow + j] += n1; 
+					normals[thisRow + j] += n1; 
+					normals[prevRow + nextRow] += n1;
 
 					indices.Add(prevRow + nextRow);
 					indices.Add(thisRow + j);
 					indices.Add(thisRow + nextRow);
 
+					Vector3 n2 = (verts[thisRow + j] - verts[prevRow + nextRow]).Cross(verts[thisRow + nextRow] - verts[prevRow + nextRow]); 
+					
+					normals[prevRow + nextRow] += n2;
+					normals[thisRow + j] += n2;
+					normals[thisRow + nextRow] += n2;
 
-				}
+                }
 			  
 			}
-			prevRow = thisRow;
-			thisRow = point;
+			//prevRow = thisRow;
+			//thisRow = i;
 		   
 		}
-		
+
+
+        for (int n= 0; n < normals.Count; n++)
+		{
+			normals[n]= normals[n].Normalized();
+		}
 		// Convert Lists to arrays and assign to surface array
 		surfaceArray[(int)Mesh.ArrayType.Vertex] = verts.ToArray();
 		surfaceArray[(int)Mesh.ArrayType.TexUV] = uvs.ToArray();
-		surfaceArray[(int)Mesh.ArrayType.Normal] = normals.ToArray();
+		//surfaceArray[(int)Mesh.ArrayType.Normal] = normals.ToArray();
 		surfaceArray[(int)Mesh.ArrayType.Index] = indices.ToArray();
 
 		ArrayMesh arrMesh = new ArrayMesh();
+        arrMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
+        arrMesh.SurfaceUpdateVertexRegion(0, 0, []);
 
-		if (arrMesh != null)
+        if (arrMesh != null)
 		{
 			arrMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
-			//arrMesh.generateNormals();
+			
 		}
 
 		MeshInstance3D meshInstance = new MeshInstance3D();
 		meshInstance.Mesh = arrMesh;
 		
 		AddChild(meshInstance);
-		currMesh = GetChild<MeshInstance3D>(2);
+		currMesh =meshInstance;
 
 		
 	}
