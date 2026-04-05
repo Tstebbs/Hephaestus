@@ -118,7 +118,7 @@ text = "Blade Taper"
 layout_mode = 2
 max_value = 0.9
 step = 0.05
-value = 0.15
+value = 0.5
 
 [node name="Label8" type="Label" parent="sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer" unique_id=1059163165]
 layout_mode = 2

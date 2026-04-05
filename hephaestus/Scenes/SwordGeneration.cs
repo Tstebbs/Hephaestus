@@ -37,8 +37,15 @@ public partial class SwordGeneration : Node3D
 	public Array<Vector2> crossSecPositions;
 	
 	public MeshInstance3D currMesh;
+	public Material bladeMaterial;
 
-	bool isSwordCurved = false;
+    private PackedScene handguard1Scene;
+    private PackedScene handguard2Scene;
+
+    Node3D handguard1;
+    Node3D handguard2;
+
+    bool isSwordCurved = false;
 	public int numCrossSec = 10;
 
 	Godot.Collections.Array surfaceArray = [];   
@@ -55,8 +62,12 @@ public partial class SwordGeneration : Node3D
 
 	public override void _Ready()
 	{
+		handguard1Scene= ResourceLoader.Load<PackedScene>("res://Scenes/handguard1.tscn");
+        handguard2Scene = ResourceLoader.Load<PackedScene>("res://Scenes/handguard2.tscn");
+        bladeMaterial = GD.Load<Material>("res://Resources/materials/metal1/mat.tres");
 
-		lengthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/LengthSlider");
+
+        lengthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/LengthSlider");
 		depthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/DepthSlider");
 		widthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/WidthSlider");
 		taperSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/TaperSlider");
@@ -66,6 +77,7 @@ public partial class SwordGeneration : Node3D
 		fullerDSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/fullerDSlider");
 
 		edgesSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/edgesSlider");
+
         //base parameters
         bladeLength = 2.0f;
 		bladeDepth = 0.1f;
@@ -107,6 +119,24 @@ public partial class SwordGeneration : Node3D
 
 		edges=(float)edgesSlider.Value;
 
+		if(edges==2 && bladeLength>1.4)
+		{
+			if (depthSlider.Value < 0.18)
+			{
+				depthSlider.Value = 0.18f;
+			}
+
+			if(widthSlider.Value <0.045)
+			{
+				widthSlider.Value = 0.045;
+			}
+
+			if (taperSlider.Value>0.5)
+			{
+				taperSlider.Value = 0.5;
+			}
+		}
+
 	}
 
 	private void generatePressed()
@@ -119,7 +149,7 @@ public partial class SwordGeneration : Node3D
 		//takes sword type to generate
 		GenerateSwordType(currSword);
         GD.Print(currSword);
-        generateMesh(numofPointsPerCs);
+        generateMesh(numofPointsPerCs,currSword);
 	}
 
 	private void GenerateSwordType(SwordType sword)
@@ -139,29 +169,29 @@ public partial class SwordGeneration : Node3D
 		if (sword == SwordType.STRSWORD)
 		{
 			createBladeSpine(bladeLength);
-			createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth,fullerLength, fullerDepth);
-			//createThrustingSword(numCrossSec, bladeWidth, bladeDepth, bladeTaper);
-		}
+           
+            createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth,fullerLength, fullerDepth);
+            addHandguard(sword, bladeWidth, bladeDepth);
+
+        }
+
+		if (sword == SwordType.GRTSWORD)
+        {
+            createBladeSpine(bladeLength);
+            
+            createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth, fullerLength, fullerDepth);
+            addHandguard(sword, bladeWidth, bladeDepth);
+
+        }
 
         if (sword == SwordType.RAPIER)
         {
             createBladeSpine(bladeLength);
             //createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth, fullerLength, fullerDepth);
             createThrustingSword(numCrossSec, bladeWidth, bladeDepth, bladeTaper);
+			addHandguard(sword,bladeWidth,bladeDepth);
         }
 
-        //Output code to showcase cross section points for each spine point
-        //int count = 0;
-        //for (int i = 0; i < 11; i++)
-        //{
-        //    GD.Print(i, SpinePositions[i]);
-        //    for (int j = 0; j < 4; j++)
-        //    {
-
-        //        GD.Print(" cross section 4 ", j, " X ", crossSecPositions[count].X, " Y ", crossSecPositions[count].Y);
-        //        count++;
-        //    }
-        //}
     }
 
 	private void setSwordType()
@@ -184,17 +214,17 @@ public partial class SwordGeneration : Node3D
         }
         else
 		{
-            currSword = SwordType.STRSWORD;
+			if(bladeLength<1.4)
+			{
+                currSword = SwordType.STRSWORD;
+            }
+			else
+			{
+				currSword = SwordType.GRTSWORD;
+			}
+			
         }
-  //     
-		//else if (bladeLength > 20)
-		//{
-		//	currSword = SwordType.GRTSWORD;
-		//}
-		//else
-		//{
-		//	currSword = SwordType.STRSWORD;
-		//}
+  
 
 	}
 
@@ -213,7 +243,21 @@ public partial class SwordGeneration : Node3D
 		SpinePositions.Clear();
 		crossSecPositions.Clear();
 		currMesh.QueueFree();
-	}
+
+        
+       
+		if(currSword==SwordType.STRSWORD)
+		{
+            GetNodeOrNull<Node3D>("Handguard1").QueueFree();
+        }
+		else if(currSword==SwordType.GRTSWORD)
+		{
+            GetNodeOrNull<Node3D>("Handguard2").QueueFree();
+        }
+       
+
+        
+    }
 
 	private void curvedSpine(float length)
 	{
@@ -221,6 +265,29 @@ public partial class SwordGeneration : Node3D
 		for (int i = 0; i < 11; i++)
 		{
 			SpinePositions.Add(new Vector2((float)(i * spacing), i));
+		}
+	}
+
+	private void addHandguard(SwordType swordType, float bladewidth, float bladedepth)
+	{
+		if(swordType==SwordType.STRSWORD)
+		{
+            handguard1 = handguard1Scene.Instantiate<Node3D>();
+            AddChild(handguard1);
+			
+        }
+		else if(swordType == SwordType.GRTSWORD)
+		{
+            handguard2 = handguard2Scene.Instantiate<Node3D>();
+            AddChild(handguard2);
+			float bladewPercent = 0.2f*((float) ((bladewidth - 0.045) / (0.08 - 0.045)));
+            float bladedPercent = 0.1f * ((float)((bladedepth - 0.18) / (0.3 - 0.18)));
+           
+            handguard2.Scale = new Vector3(0.8f+bladewPercent, 0.9f+bladedPercent, 1.0f);
+        }
+		else if(swordType==SwordType.RAPIER)
+		{
+
 		}
 	}
 
@@ -362,13 +429,12 @@ public partial class SwordGeneration : Node3D
 
 	}
 
-    private void generateMesh(int crossSecPoints/*, godot_array bladeVertices, godot_array bladeIndices*/)
+    private void generateMesh(int crossSecPoints, SwordType swordType/*, godot_array bladeVertices, godot_array bladeIndices*/)
 	{
 		int crossSections = 11;
 		Godot.Collections.Array surfaceArray = [];
 		surfaceArray.Resize((int)Mesh.ArrayType.Max);
 
-		// C# arrays cannot be resized or expanded, so use Lists to create geometry.
 		List<Vector3> verts = [];
 		List<Vector2> uvs = [];
 		List<Vector3> normals = [];
@@ -439,9 +505,7 @@ public partial class SwordGeneration : Node3D
                 }
 			  
 			}
-			//prevRow = thisRow;
-			//thisRow = i;
-		   
+		
 		}
 
 
@@ -456,21 +520,20 @@ public partial class SwordGeneration : Node3D
 		surfaceArray[(int)Mesh.ArrayType.Index] = indices.ToArray();
 
 		ArrayMesh arrMesh = new ArrayMesh();
-        arrMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
-        arrMesh.SurfaceUpdateVertexRegion(0, 0, []);
-
+        
         if (arrMesh != null)
 		{
 			arrMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
 			
 		}
 
+		
 		MeshInstance3D meshInstance = new MeshInstance3D();
 		meshInstance.Mesh = arrMesh;
-		
+		meshInstance.SetSurfaceOverrideMaterial(0,bladeMaterial);
 		AddChild(meshInstance);
 		currMesh =meshInstance;
-
+		
 		
 	}
 

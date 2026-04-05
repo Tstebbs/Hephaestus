@@ -8,7 +8,8 @@
 [node name="handguardMesh" parent="." unique_id=1665136506 instance=ExtResource("1_rr6ap")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.691355, -0.5219631, 0.42554855)
 
-[node name="Sword" parent="handguardMesh" index="0" unique_id=283750840]
+[node name="Sword" parent="handguardMesh" index="0" unique_id=232498915]
+transform = Transform3D(-9.703928e-09, 0, 0.167, 0, 0.2, 0, -0.222, 0, -7.2998017e-09, -7.714275, 0.5191307, -0.42015702)
 surface_material_override/0 = ExtResource("2_s3bar")
 
 [editable path="handguardMesh"]

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cqwxskr7fd31m"]
+
+[ext_resource type="PackedScene" uid="uid://cljq8pj83qhdc" path="res://Resources/handguards/shand2.glb" id="1_x42us"]
+
+[node name="Handguard2" type="Node3D" unique_id=1928199312]
+
+[node name="shand2" parent="." unique_id=1232898847 instance=ExtResource("1_x42us")]
+transform = Transform3D(4.371139e-08, -3.960142e-15, 1, -1.509958e-07, -0.6, 0, 1, -9.059749e-08, -4.371139e-08, 0.004891932, 0.31527048, 0.13600993)
