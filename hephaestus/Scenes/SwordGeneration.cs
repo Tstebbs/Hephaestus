@@ -136,6 +136,13 @@ public partial class SwordGeneration : Node3D
 				taperSlider.Value = 0.5;
 			}
 		}
+		else if (edges==2)
+		{
+            if (depthSlider.Value > 0.2)
+            {
+                depthSlider.Value = 0.2f;
+            }
+        }
 
 	}
 
@@ -274,7 +281,11 @@ public partial class SwordGeneration : Node3D
 		{
             handguard1 = handguard1Scene.Instantiate<Node3D>();
             AddChild(handguard1);
-			
+            float bladewPercent = 0.6f * ((float)((bladewidth - 0.005) / (0.08 - 0.005)));
+            float bladedPercent = 0.4f * ((float)((bladedepth - 0.1) / (0.2 - 0.1)));
+
+            handguard1.Scale = new Vector3(0.4f + bladewPercent, 0.6f + bladedPercent, 1.0f);
+
         }
 		else if(swordType == SwordType.GRTSWORD)
 		{
