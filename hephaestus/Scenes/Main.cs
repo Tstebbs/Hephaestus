@@ -8,13 +8,13 @@ public partial class Main : Control
     Button quitButton;
     public override void _Ready()
     {
-        startButton = GetNode<Button>("MarginContainer/VBoxContainer/buttonvContainer/start");
+        startButton = GetNode<Button>("TextureRect2/buttonvContainer/start");
         startButton.Pressed += onStartPressed;
 
-        start2Button = GetNode<Button>("MarginContainer/VBoxContainer/buttonvContainer/start2");
+        start2Button = GetNode<Button>("TextureRect2/buttonvContainer/start2");
         start2Button.Pressed += onStart2Pressed;
-
-        quitButton = GetNode<Button>("MarginContainer/VBoxContainer/buttonvContainer/Quit");
+       
+        quitButton = GetNode<Button>("TextureRect2/buttonvContainer/Quit");
         quitButton.Pressed += onQuitPressed;
     }
 

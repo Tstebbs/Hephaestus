@@ -5,6 +5,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|d:\\uni abertay\\uni work\\y4\\cmp 400\\repos\\hephaestus\\hephaestus\\scenes\\swordgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|solutionrelative:scenes\\swordgeneration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|d:\\uni abertay\\uni work\\y4\\cmp 400\\repos\\hephaestus\\hephaestus\\scenes\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC4FB013-23A8-4ADB-BEBA-7C7F2CCF3E4A}|Hephaestus.csproj|solutionrelative:scenes\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +18,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Main.cs",
+              "DocumentMoniker": "D:\\Uni Abertay\\Uni work\\Y4\\CMP 400\\Repos\\Hephaestus\\hephaestus\\Scenes\\Main.cs",
+              "RelativeDocumentMoniker": "Scenes\\Main.cs",
+              "ToolTip": "D:\\Uni Abertay\\Uni work\\Y4\\CMP 400\\Repos\\Hephaestus\\hephaestus\\Scenes\\Main.cs",
+              "RelativeToolTip": "Scenes\\Main.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-19T19:00:53.374Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -24,7 +41,7 @@
               "RelativeDocumentMoniker": "Scenes\\SwordGeneration.cs",
               "ToolTip": "D:\\Uni Abertay\\Uni work\\Y4\\CMP 400\\Repos\\Hephaestus\\hephaestus\\Scenes\\SwordGeneration.cs",
               "RelativeToolTip": "Scenes\\SwordGeneration.cs",
-              "ViewState": "AgIAAEIBAAAAAAAAAAAIwFcBAABfAAAAAAAAAA==",
+              "ViewState": "AgIAALAAAAAAAAAAAAAmwMQAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-16T11:01:41.016Z",
               "EditorCaption": ""

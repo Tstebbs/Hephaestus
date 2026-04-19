@@ -23,7 +23,7 @@ config/icon="uid://dnb3eirseedpy"
 [display]
 
 window/size/viewport_width=1900
-window/size/viewport_height=1060
+window/size/viewport_height=1080
 window/size/mode=3
 
 [dotnet]
