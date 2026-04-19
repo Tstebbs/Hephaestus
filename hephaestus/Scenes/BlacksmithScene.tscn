@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://c088xww5q5w3"]
+
+[ext_resource type="Texture2D" uid="uid://cqssdjpkk25o1" path="res://Resources/farm_field_puresky_4k.exr" id="1_u3wfo"]
+[ext_resource type="Texture2D" uid="uid://bbxubpst7k4lo" path="res://Resources/kenney_prototypeTextures/PNG/Dark/texture_03.png" id="2_xyihi"]
+[ext_resource type="PackedScene" uid="uid://lvcrmns15buh" path="res://Resources/Blacksmith/blacksmithing_tools..glb" id="3_yquv4"]
+[ext_resource type="Texture2D" uid="uid://dbdjoy42dpupq" path="res://Resources/Blacksmith/ground/cobblestone_05_2k.blend/textures/cobblestone_05_diff_2k.jpg" id="4_u04ct"]
+[ext_resource type="PackedScene" uid="uid://j6kbsblec171" path="res://Resources/Blacksmith/building/medieval_blacksmith_house.glb" id="4_ujr51"]
+[ext_resource type="Texture2D" uid="uid://cfe7n2o86q3pw" path="res://Resources/Blacksmith/ground/cobblestone_05_2k.blend/textures/cobblestone_05_disp_2k.png" id="5_gub7k"]
+[ext_resource type="Texture2D" uid="uid://j1g7gmm62tbo" path="res://Resources/Blacksmith/ground/cobblestone_05_2k.blend/textures/cobblestone_05_rough_2k.jpg" id="6_rdirp"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_dm7ql"]
+panorama = ExtResource("1_u3wfo")
+
+[sub_resource type="Sky" id="Sky_d14kj"]
+sky_material = SubResource("PanoramaSkyMaterial_dm7ql")
+
+[sub_resource type="Environment" id="Environment_50afd"]
+background_mode = 2
+background_energy_multiplier = 0.52
+sky = SubResource("Sky_d14kj")
+ambient_light_color = Color(0.42365062, 0.42365065, 0.42365062, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_muyfj"]
+albedo_texture = ExtResource("2_xyihi")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_cai76"]
+size = Vector2(10, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ujr51"]
+flip_faces = true
+size = Vector3(10, 3, 10)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_3h0g1"]
+size = Vector2(20, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n6kgg"]
+albedo_texture = ExtResource("4_u04ct")
+metallic = 0.1
+metallic_specular = 0.38
+roughness_texture = ExtResource("6_rdirp")
+normal_enabled = true
+heightmap_enabled = true
+heightmap_scale = 0.954
+heightmap_texture = ExtResource("5_gub7k")
+uv1_scale = Vector3(5, 5, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ujr51"]
+size = Vector3(5.769043, 6.4885864, 8.854193)
+
+[node name="BlacksmithScene" type="Node3D" unique_id=1434766981]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=295690143]
+environment = SubResource("Environment_50afd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldEnvironment" unique_id=1277700894]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00018072128, -0.6769897, 0.00094258785)
+visible = false
+material_override = SubResource("StandardMaterial3D_muyfj")
+mesh = SubResource("PlaneMesh_cai76")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="WorldEnvironment" unique_id=924906594]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.830931, -3.521736)
+light_color = Color(1, 1, 0.8901961, 1)
+light_energy = 9.515
+shadow_enabled = true
+omni_range = 14.6684475
+
+[node name="Node3D" type="Node3D" parent="WorldEnvironment" unique_id=1356862833]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.43820828, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldEnvironment/Node3D" unique_id=327598890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.80836535, 1.3724574)
+visible = false
+mesh = SubResource("BoxMesh_ujr51")
+
+[node name="Sketchfab_Scene" parent="WorldEnvironment/Node3D" unique_id=43837470 instance=ExtResource("3_yquv4")]
+transform = Transform3D(0.06, 0, 0, 0, 0.06, 0, 0, 0, 0.06, 0.39247623, -0.7716282, -2.2894006)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="WorldEnvironment/Node3D" unique_id=1135938286]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.77676606, 0)
+mesh = SubResource("PlaneMesh_3h0g1")
+surface_material_override/0 = SubResource("StandardMaterial3D_n6kgg")
+
+[node name="Sketchfab_Scene2" parent="WorldEnvironment/Node3D" unique_id=984333372 instance=ExtResource("4_ujr51")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1838882, 2.3580203, 2.2938545)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="WorldEnvironment/Node3D/Sketchfab_Scene2" unique_id=227341554]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.6949525)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/Node3D/Sketchfab_Scene2/RigidBody3D" unique_id=1298169770]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3845217, 0.057281494, -1.2126074)
+shape = SubResource("BoxShape3D_ujr51")

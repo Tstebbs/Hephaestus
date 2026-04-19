@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dsokllb0fex3n"]
+
+[ext_resource type="PackedScene" uid="uid://b5wp0j2cyo3j3" path="res://Resources/handguards/RapierGuard/Rguardblend.glb" id="1_qpm8d"]
+[ext_resource type="Material" uid="uid://b10w6mpm0mnww" path="res://Resources/materials/testmetal.tres" id="2_ws4xb"]
+
+[node name="Rguardblend" unique_id=1745227800 instance=ExtResource("1_qpm8d")]
+
+[node name="Cube_001" parent="." index="0" unique_id=899738830]
+surface_material_override/0 = ExtResource("2_ws4xb")
+
+[node name="Cube_004" parent="." index="1" unique_id=76294236]
+surface_material_override/0 = ExtResource("2_ws4xb")

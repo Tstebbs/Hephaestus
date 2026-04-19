@@ -41,9 +41,11 @@ public partial class SwordGeneration : Node3D
 
     private PackedScene handguard1Scene;
     private PackedScene handguard2Scene;
+    private PackedScene handguard3Scene;
 
     Node3D handguard1;
     Node3D handguard2;
+	Node3D handguard3;
 
     bool isSwordCurved = false;
 	public int numCrossSec = 10;
@@ -54,7 +56,6 @@ public partial class SwordGeneration : Node3D
 		STRSWORD,
 		GRTSWORD,
 		KATANA,
-		CUTLASS,
 		RAPIER
 	}
 
@@ -64,8 +65,9 @@ public partial class SwordGeneration : Node3D
 	{
 		handguard1Scene= ResourceLoader.Load<PackedScene>("res://Scenes/handguard1.tscn");
         handguard2Scene = ResourceLoader.Load<PackedScene>("res://Scenes/handguard2.tscn");
-        bladeMaterial = GD.Load<Material>("res://Resources/materials/metal1/mat.tres");
+        handguard3Scene = ResourceLoader.Load<PackedScene>("res://Scenes/handguard3.tscn");
 
+        bladeMaterial = GD.Load<Material>("res://Resources/materials/metal1/mat.tres");
 
         lengthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/LengthSlider");
 		depthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/DepthSlider");
@@ -143,28 +145,33 @@ public partial class SwordGeneration : Node3D
                 depthSlider.Value = 0.2f;
             }
         }
+		else if(edges==0)
+		{
+			if(depthSlider.Value>0.14)
+			{
+				depthSlider.Value = 0.14f;
+			}
+			widthSlider.Value= 0;
+		}
 
+		
 	}
 
 	private void generatePressed()
 	{
-		
-		GD.Print("pressed!!");
-		//takes Parameters and determine sword type
+        if (GetChild<MeshInstance3D>(2) != null)
+        {
+            clearMeshData();
+        }
+        //clearMeshData();
 		setSwordType();
-
-		//takes sword type to generate
 		GenerateSwordType(currSword);
-        GD.Print(currSword);
+
         generateMesh(numofPointsPerCs,currSword);
 	}
 
 	private void GenerateSwordType(SwordType sword)
 	{
-		if (GetChild<MeshInstance3D>(2)!=null) 
-		{
-			clearMeshData();
-		}
 
 		//unimplmented function call for curved swords
 		if (isSwordCurved == true)
@@ -178,6 +185,7 @@ public partial class SwordGeneration : Node3D
 			createBladeSpine(bladeLength);
            
             createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth,fullerLength, fullerDepth);
+			bladeWeightT(sword, bladeDepth, bladeWidth, bladeLength, bladeTaper);
             addHandguard(sword, bladeWidth, bladeDepth);
 
         }
@@ -187,16 +195,17 @@ public partial class SwordGeneration : Node3D
             createBladeSpine(bladeLength);
             
             createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth, fullerLength, fullerDepth);
+            bladeWeightT(sword, bladeDepth, bladeWidth, bladeLength, bladeTaper);
             addHandguard(sword, bladeWidth, bladeDepth);
 
         }
 
         if (sword == SwordType.RAPIER)
         {
-            createBladeSpine(bladeLength);
-            //createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth, fullerLength, fullerDepth);
-            createThrustingSword(numCrossSec, bladeWidth, bladeDepth, bladeTaper);
-			addHandguard(sword,bladeWidth,bladeDepth);
+            createBladeSpine(bladeLength / 2);
+            createThrustingSword(numCrossSec, bladeWidth/2, bladeDepth / 2, bladeTaper);
+			bladeWeightT(sword, bladeDepth/2, bladeDepth/2, bladeLength/2, bladeTaper);
+			addHandguard(sword,bladeWidth / 2,bladeDepth / 2);
         }
 
     }
@@ -251,8 +260,6 @@ public partial class SwordGeneration : Node3D
 		crossSecPositions.Clear();
 		currMesh.QueueFree();
 
-        
-       
 		if(currSword==SwordType.STRSWORD)
 		{
             GetNodeOrNull<Node3D>("Handguard1").QueueFree();
@@ -261,9 +268,11 @@ public partial class SwordGeneration : Node3D
 		{
             GetNodeOrNull<Node3D>("Handguard2").QueueFree();
         }
-       
+		else if(currSword==SwordType.RAPIER)
+		{
+            GetNodeOrNull<Node3D>("Handguard3").QueueFree();
+        }
 
-        
     }
 
 	private void curvedSpine(float length)
@@ -274,6 +283,31 @@ public partial class SwordGeneration : Node3D
 			SpinePositions.Add(new Vector2((float)(i * spacing), i));
 		}
 	}
+
+	private void bladeWeightT(SwordType swordType, float bladedepth ,float bladeWidth ,float bladelength, float bladeTaper)
+	{
+		float totalVolume = 0;
+
+        if (swordType == SwordType.STRSWORD || swordType == SwordType.GRTSWORD)
+		{
+			float averageDepth = ((bladedepth + bladedepth * bladeTaper) / 2);
+            totalVolume = averageDepth* bladeWidth * bladeLength;
+			//float minTapervolume = bladeDepth * bladeTaper * bladeWidth * bladelength;
+   //         totalVolume = volume * (1 - bladeTaper) + minTapervolume * bladeTaper;
+	
+        }
+		else
+		{
+			float radius = bladedepth;
+			float Cvolume= (float)3.14*radius*bladeLength;
+            float Conevolume = (float)3.14 * radius * bladeLength/3;
+			totalVolume = Cvolume*(1-bladeTaper) + Conevolume*bladeTaper;
+			
+        }
+
+		GD.Print(totalVolume);
+	}
+
 
 	private void addHandguard(SwordType swordType, float bladewidth, float bladedepth)
 	{
@@ -290,6 +324,7 @@ public partial class SwordGeneration : Node3D
 		else if(swordType == SwordType.GRTSWORD)
 		{
             handguard2 = handguard2Scene.Instantiate<Node3D>();
+            handguard2.RotateX(-(float)1.571);
             AddChild(handguard2);
 			float bladewPercent = 0.2f*((float) ((bladewidth - 0.045) / (0.08 - 0.045)));
             float bladedPercent = 0.1f * ((float)((bladedepth - 0.18) / (0.3 - 0.18)));
@@ -298,8 +333,14 @@ public partial class SwordGeneration : Node3D
         }
 		else if(swordType==SwordType.RAPIER)
 		{
+            handguard3 = handguard3Scene.Instantiate<Node3D>();
+            handguard3.RotateX(-(float)1.571);
+            AddChild(handguard3);
+            float bladeDiamPercent = 0.35f * ((float)(((bladedepth-0.04) - 0.01) / (0.03 - 0.01)));
+            
 
-		}
+            handguard3.Scale = new Vector3(0.65f + bladeDiamPercent, 0.65f + bladeDiamPercent, 0.8f);
+        }
 	}
 
     //creates diamond shape for cross section of sword for each spine point with paer towards tip
@@ -366,23 +407,22 @@ public partial class SwordGeneration : Node3D
 			}
             else
 			{
-                numofPointsPerCs = 6;
+                numofPointsPerCs = 4;
                 crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
 				crossSecPositions.Add(new Vector2(0, 0 - currentHeight));
 				crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
 				crossSecPositions.Add(new Vector2(0, 0 + currentHeight));
 			}
 
-				
-			
-			// tapers point
-			
 		}
 	}
 
     private void createThrustingSword(int crossSections, float width, float height, float taperLength)
     {
-        //start 4 points of blade to be adapted to 12 later to allow tunable sharpness and fuller
+		GD.Print(width," height: " ,height);
+       // bladeWeightT(SwordType.RAPIER,width,width,height,taperLength);
+		//start 4 points of blade to be adapted to 12 later to allow tunable sharpness and fuller
+		height = height - 0.08f;
         float endTaper = height;
 
         if (taperLength > 0)
@@ -428,17 +468,10 @@ public partial class SwordGeneration : Node3D
                 crossSecPositions.Add(new Vector2((float)(0 + (currentHeight*Math.Cos(angle))),(float)( 0+(currentHeight * Math.Sin(angle)))));
             }
 
-           
-
-
 
         }
     }
 
-	private void generateVerts(int crossSecPoints/*, godot_array bladeVertices, godot_array bladeIndices*/)
-	{
-
-	}
 
     private void generateMesh(int crossSecPoints, SwordType swordType/*, godot_array bladeVertices, godot_array bladeIndices*/)
 	{
@@ -542,9 +575,10 @@ public partial class SwordGeneration : Node3D
 		MeshInstance3D meshInstance = new MeshInstance3D();
 		meshInstance.Mesh = arrMesh;
 		meshInstance.SetSurfaceOverrideMaterial(0,bladeMaterial);
+		meshInstance.RotateX(-(float)1.571);
 		AddChild(meshInstance);
 		currMesh =meshInstance;
-		
+
 		
 	}
 

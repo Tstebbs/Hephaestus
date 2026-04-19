@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://g5iheve56l61"]
+
+[ext_resource type="PackedScene" uid="uid://d3dagba6jmr60" path="res://Scenes/SwordGeneration.tscn" id="1_llxab"]
+[ext_resource type="PackedScene" uid="uid://c088xww5q5w3" path="res://Scenes/BlacksmithScene.tscn" id="2_llxab"]
+
+[node name="TestMainscene" type="Node3D" unique_id=72649522]
+
+[node name="SwordGeneration" parent="." unique_id=957261814 instance=ExtResource("1_llxab")]
+
+[node name="BlacksmithScene" parent="." unique_id=1434766981 instance=ExtResource("2_llxab")]

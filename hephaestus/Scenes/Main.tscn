@@ -61,36 +61,36 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 focus_neighbor_top = NodePath("../Quit")
-focus_neighbor_bottom = NodePath("../info")
+focus_neighbor_bottom = NodePath("../start2")
 theme = ExtResource("1_r150o")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Start Generation"
 
-[node name="info" type="Button" parent="MarginContainer/VBoxContainer/buttonvContainer" unique_id=1482042275]
+[node name="start2" type="Button" parent="MarginContainer/VBoxContainer/buttonvContainer" unique_id=1482042275]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 focus_neighbor_top = NodePath("../start")
-focus_neighbor_bottom = NodePath("../load saved models?")
+focus_neighbor_bottom = NodePath("../Info")
 theme = ExtResource("1_r150o")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Info & Controls"
+text = "Start-Basic "
 
-[node name="load saved models?" type="Button" parent="MarginContainer/VBoxContainer/buttonvContainer" unique_id=702461247]
+[node name="Info" type="Button" parent="MarginContainer/VBoxContainer/buttonvContainer" unique_id=702461247]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-focus_neighbor_top = NodePath("../info")
+focus_neighbor_top = NodePath("../start2")
 focus_neighbor_bottom = NodePath("../Quit")
 theme = ExtResource("1_r150o")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Load Saved Models"
+text = "Info & Controls"
 
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/buttonvContainer" unique_id=1507436565]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-focus_neighbor_top = NodePath("../load saved models?")
+focus_neighbor_top = NodePath("../Info")
 focus_neighbor_bottom = NodePath("../start")
 theme = ExtResource("1_r150o")
 theme_override_colors/font_color = Color(0, 0, 0, 1)

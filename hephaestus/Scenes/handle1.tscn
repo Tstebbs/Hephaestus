@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://7nqk8rt7rbwb"]
+
+[ext_resource type="Material" uid="uid://bee4x574fjxim" path="res://Resources/materials/metal1/mat.tres" id="1_m25rv"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xl5va"]
+top_radius = 0.035
+bottom_radius = 0.05
+height = 0.3
+radial_segments = 15
+
+[sub_resource type="Gradient" id="Gradient_xl5va"]
+colors = PackedColorArray(0, 0, 0, 1, 0.69803923, 0.6039216, 0.27450982, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_m25rv"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wpgdd"]
+noise = SubResource("FastNoiseLite_m25rv")
+color_ramp = SubResource("Gradient_xl5va")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xyxjj"]
+albedo_color = Color(0.25882354, 0, 0, 1)
+roughness = 0.96
+roughness_texture = SubResource("NoiseTexture2D_wpgdd")
+
+[node name="Handle1" type="Node3D" unique_id=54470607]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=393437045]
+transform = Transform3D(1.5, 0, 0, 0, -0.0014922676, -1.4999993, 0, 1.4999993, -0.0014922676, 0, 0, -0.23458573)
+mesh = SubResource("CylinderMesh_xl5va")
+surface_material_override/0 = SubResource("StandardMaterial3D_xyxjj")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=2066217915]
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="MeshInstance3D2" unique_id=1344162699]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.37154984, -0.03908759, -0.45439193)
+material_override = ExtResource("1_m25rv")
+polygon = PackedVector2Array(0.32701248, 0.117777914, 0.41812965, 0.11795229, 0.46150494, 0.035694525, 0.41754776, -0.0356319, 0.32884222, -0.03775518, 0.2833417, 0.036309835)
+depth = 0.05
