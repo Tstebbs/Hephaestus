@@ -40,6 +40,7 @@ public partial class SwordGeneration : Node3D
     public MeshInstance3D handleMesh;
     public MeshInstance3D currMesh;
 	public Material bladeMaterial;
+    public Material gripMaterial;
 
     private PackedScene handguard1Scene;
     private PackedScene handguard2Scene;
@@ -70,6 +71,7 @@ public partial class SwordGeneration : Node3D
         handguard3Scene = ResourceLoader.Load<PackedScene>("res://Scenes/handguard3.tscn");
 
         bladeMaterial = GD.Load<Material>("res://Resources/materials/metal1/mat.tres");
+        gripMaterial = GD.Load<Material>("res://Resources/materials/grip/leatherGrip.tres");
 
         lengthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/LengthSlider");
 		depthSlider = GetNode<HSlider>("SwordBladeMesh/SwordGenUi2/sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer/DepthSlider");
@@ -488,7 +490,7 @@ public partial class SwordGeneration : Node3D
                 {
                     scaleFactor = scaleFactor * 0.8;
                 }
-                height = (float)(0.01f + (i *scaleFactor));
+                height = (float)(0.012f + (i *scaleFactor));
             }
 			else if (SwordType.STRSWORD == sword)
 			{
@@ -642,16 +644,18 @@ public partial class SwordGeneration : Node3D
 
 		MeshInstance3D meshInstance = new MeshInstance3D();
 		meshInstance.Mesh = arrMesh;
-		meshInstance.SetSurfaceOverrideMaterial(0,bladeMaterial);
+		
 		meshInstance.RotateX(-(float)1.571);
 		AddChild(meshInstance);
 		if (ishandle)
 		{
-			meshInstance.Translate(new Vector3(0, 0, -0.4f));
+            meshInstance.SetSurfaceOverrideMaterial(0, gripMaterial);
+            meshInstance.Translate(new Vector3(0, 0, -0.4f));
 			handleMesh = meshInstance;
 		}
 		else
 		{
+            meshInstance.SetSurfaceOverrideMaterial(0, bladeMaterial);
             currMesh = meshInstance;
         }
 	
