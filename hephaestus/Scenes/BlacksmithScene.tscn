@@ -20,6 +20,10 @@ background_energy_multiplier = 0.52
 sky = SubResource("Sky_d14kj")
 ambient_light_color = Color(0.42365062, 0.42365065, 0.42365062, 1)
 
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_u04ct"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 15.0
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_muyfj"]
 albedo_texture = ExtResource("2_xyihi")
 
@@ -51,6 +55,7 @@ size = Vector3(5.769043, 6.4885864, 8.854193)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=295690143]
 environment = SubResource("Environment_50afd")
+camera_attributes = SubResource("CameraAttributesPractical_u04ct")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WorldEnvironment" unique_id=1277700894]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00018072128, -0.6769897, 0.00094258785)
@@ -59,9 +64,10 @@ material_override = SubResource("StandardMaterial3D_muyfj")
 mesh = SubResource("PlaneMesh_cai76")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="WorldEnvironment" unique_id=924906594]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.830931, -3.521736)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8899789, 5.218126, -1.9815522)
 light_color = Color(1, 1, 0.8901961, 1)
-light_energy = 9.515
+light_energy = 7.206
+light_specular = 1.0
 shadow_enabled = true
 omni_range = 14.6684475
 

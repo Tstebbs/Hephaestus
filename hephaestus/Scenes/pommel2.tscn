@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://ddrxjyyl42rtn"]
+
+[ext_resource type="Material" uid="uid://bee4x574fjxim" path="res://Resources/materials/metal1/mat.tres" id="1_4pdwr"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_x4u7e"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_23o1u"]
+top_radius = 0.06
+bottom_radius = 0.06
+height = 0.12
+
+[node name="Pommel2" type="Node3D" unique_id=951810447]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1980430368]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_x4u7e")
+surface_material_override/0 = ExtResource("1_4pdwr")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1873279708]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.0038594306, 0, 0)
+mesh = SubResource("CylinderMesh_23o1u")
+skeleton = NodePath("../MeshInstance3D")
+surface_material_override/0 = ExtResource("1_4pdwr")

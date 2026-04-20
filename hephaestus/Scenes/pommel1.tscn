@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://wm3yunk1xrt7"]
+
+[ext_resource type="Material" uid="uid://bee4x574fjxim" path="res://Resources/materials/metal1/mat.tres" id="1_tk82h"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_r4q6g"]
+top_radius = 0.033
+bottom_radius = 0.025
+height = 0.01
+radial_segments = 12
+
+[node name="Pommel1" type="Node3D" unique_id=1895546454]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=14687624]
+mesh = SubResource("CylinderMesh_r4q6g")
+surface_material_override/0 = ExtResource("1_tk82h")

@@ -1,13 +1,19 @@
 [gd_scene format=3 uid="uid://d0aw8o3ndmlys"]
 
-[ext_resource type="PackedScene" uid="uid://b5wp0j2cyo3j3" path="res://Resources/handguards/RapierGuard/Rguardblend.glb" id="1_j8k6u"]
 [ext_resource type="PackedScene" uid="uid://dsokllb0fex3n" path="res://Resources/handguards/RapierGuard/handguardr.tscn" id="2_7f078"]
+[ext_resource type="Material" uid="uid://bee4x574fjxim" path="res://Resources/materials/metal1/mat.tres" id="2_xrkrr"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7f078"]
+top_radius = 1.6
+bottom_radius = 2.4
+height = 2.2
 
 [node name="Handguard3" type="Node3D" unique_id=60926434]
 
-[node name="Rguardblend" parent="." unique_id=1745227800 instance=ExtResource("1_j8k6u")]
-transform = Transform3D(0.025, 0, 0, 0, -1.0927848e-09, -0.028, 0, 0.025, -1.2239189e-09, -0.001255285, 0.0015836358, 0.047512226)
-visible = false
-
 [node name="Rguardblend2" parent="." unique_id=1247374664 instance=ExtResource("2_7f078")]
 transform = Transform3D(0.01, 0, 0, 0, -4.3711387e-10, -0.01, 0, 0.01, -4.3711387e-10, 0, 0, 0.048667625)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Rguardblend2" unique_id=1830728566]
+transform = Transform3D(1, 0, 0, 0, 1, -3.5527137e-15, 0, 3.5527137e-15, 1, 0, -2.6305263, 1.14983926e-07)
+mesh = SubResource("CylinderMesh_7f078")
+surface_material_override/0 = ExtResource("2_xrkrr")

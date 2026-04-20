@@ -7,9 +7,6 @@
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_na31y"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_na31y"]
-radius = 0.87392807
-
 [node name="SwordGeneration" type="Node3D" unique_id=957261814]
 script = ExtResource("1_p7yi8")
 
@@ -24,7 +21,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.004752625, 0, -0.007387638)
 visible = false
 
 [node name="Handle2" parent="SwordBladeMesh" unique_id=368892085 instance=ExtResource("4_na31y")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.004752625, 0, -0.007387638)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.004752625, -0.36776397, -0.007387638)
 visible = false
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=186079098]
@@ -36,11 +33,3 @@ transform = Transform3D(-0.0017596729, -0.3349254, 0.94224304, -0.0006254841, 0.
 current = true
 fov = 74.07165
 script = ExtResource("3_c6g4d")
-
-[node name="RigidBody3D" type="RigidBody3D" parent="OmniLight3D/Camera3D" unique_id=926406090]
-visible = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="OmniLight3D/Camera3D/RigidBody3D" unique_id=1831975546]
-transform = Transform3D(1, 1.3877788e-17, 0, 2.0816682e-16, 1, -2.1740941e-13, -1.1641532e-10, -2.1740978e-13, 1, 0, 0, 0)
-visible = false
-shape = SubResource("SphereShape3D_na31y")

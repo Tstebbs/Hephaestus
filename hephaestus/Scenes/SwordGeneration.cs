@@ -22,7 +22,7 @@ public partial class SwordGeneration : Node3D
 	private float bladeWidth;
 	private float bladeDepth;
 	private float bladeTaper;
-	//point v
+	
 	private float pointLength;
 	//fuller variables
 	private float fullerWidth;
@@ -50,6 +50,13 @@ public partial class SwordGeneration : Node3D
     Node3D handguard2;
 	Node3D handguard3;
 
+    private PackedScene pommel1Scene;
+    private PackedScene pommel2Scene;
+
+    Node3D pommel1;
+    Node3D pommel2;
+    Node3D pommel3;
+
     bool isSwordCurved = false;
 	public int numCrossSec = 10;
 
@@ -69,6 +76,9 @@ public partial class SwordGeneration : Node3D
 		handguard1Scene= ResourceLoader.Load<PackedScene>("res://Scenes/handguard1.tscn");
         handguard2Scene = ResourceLoader.Load<PackedScene>("res://Scenes/handguard2.tscn");
         handguard3Scene = ResourceLoader.Load<PackedScene>("res://Scenes/handguard3.tscn");
+
+        pommel1Scene = ResourceLoader.Load<PackedScene>("res://Scenes/pommel1.tscn");
+        pommel2Scene = ResourceLoader.Load<PackedScene>("res://Scenes/pommel2.tscn");
 
         bladeMaterial = GD.Load<Material>("res://Resources/materials/metal1/mat.tres");
         gripMaterial = GD.Load<Material>("res://Resources/materials/grip/leatherGrip.tres");
@@ -172,7 +182,7 @@ public partial class SwordGeneration : Node3D
 		setSwordType();
 		GenerateSwordType(currSword);
 
-		generateMesh(numofPointsPerCs, false);
+		generateMesh(numofPointsPerCs, false, currSword);
 	}
 
 	private void GenerateSwordType(SwordType sword)
@@ -183,9 +193,9 @@ public partial class SwordGeneration : Node3D
 			createBladeSpine(bladeLength);
             createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth,fullerLength, fullerDepth);
 			bladeWeightT(sword, bladeDepth, bladeWidth, bladeLength, bladeTaper);
-            addHandguard(sword, bladeWidth, bladeDepth);
+            addHandleParts(sword, bladeWidth, bladeDepth);
             createHandle(10, sword, 10f);
-            generateMesh(12, true);
+            generateMesh(12, true,sword);
 
 
         }
@@ -196,9 +206,9 @@ public partial class SwordGeneration : Node3D
             
             createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth, fullerLength, fullerDepth);
             bladeWeightT(sword, bladeDepth, bladeWidth, bladeLength, bladeTaper);
-            addHandguard(sword, bladeWidth, bladeDepth);
+            addHandleParts(sword, bladeWidth, bladeDepth);
             createHandle(10, sword, 10);
-			generateMesh(12, true);
+			generateMesh(12, true, sword);
 
         }
 
@@ -207,9 +217,9 @@ public partial class SwordGeneration : Node3D
             createBladeSpine(bladeLength / 2);
             createThrustingSword(numCrossSec, bladeDepth / 2, bladeTaper);
 			bladeWeightT(sword, bladeDepth/2, bladeDepth/2, bladeLength/2, bladeTaper);
-			addHandguard(sword,bladeWidth / 2,bladeDepth / 2);
+            addHandleParts(sword,bladeWidth / 2,bladeDepth / 2);
             createHandle(10, sword, 10);
-            //generateMesh(12, true);
+            generateMesh(12, true, sword);
         }
 
     }
@@ -256,20 +266,24 @@ public partial class SwordGeneration : Node3D
 	{
 		SpinePositions.Clear();
 		crossSecPositions.Clear();
+		handlecrossSecPositions.Clear();
 		currMesh.QueueFree();
 		handleMesh.QueueFree();
 
 		if(currSword==SwordType.STRSWORD)
 		{
             GetNodeOrNull<Node3D>("Handguard1").QueueFree();
+            GetNodeOrNull<Node3D>("Pommel2").QueueFree();
         }
 		else if(currSword==SwordType.GRTSWORD)
 		{
             GetNodeOrNull<Node3D>("Handguard2").QueueFree();
+            GetNodeOrNull<Node3D>("Pommel2").QueueFree();
         }
 		else if(currSword==SwordType.RAPIER)
 		{
             GetNodeOrNull<Node3D>("Handguard3").QueueFree();
+            GetNodeOrNull<Node3D>("Pommel1").QueueFree();
         }
 
     }
@@ -305,37 +319,49 @@ public partial class SwordGeneration : Node3D
 	}
 
 
-	private void addHandguard(SwordType swordType, float bladewidth, float bladedepth)
+	private void addHandleParts(SwordType swordType, float bladewidth, float bladedepth)
 	{
 		if(swordType==SwordType.STRSWORD)
 		{
             handguard1 = handguard1Scene.Instantiate<Node3D>();
+			pommel3 = pommel2Scene.Instantiate<Node3D>();
+
             AddChild(handguard1);
+			AddChild(pommel3);
             float bladewPercent = 0.6f * ((float)((bladewidth - 0.005) / (0.08 - 0.005)));
             float bladedPercent = 0.4f * ((float)((bladedepth - 0.1) / (0.2 - 0.1)));
 
             handguard1.Scale = new Vector3(0.4f + bladewPercent, 0.6f + bladedPercent, 1.0f);
+			pommel3.Translate(new Vector3(0, -0.65f, 0));
+			//pommel2.Scale = new Vector3(0.4f + bladewPercent, 0.6f + bladedPercent, 1.0f);
 
         }
 		else if(swordType == SwordType.GRTSWORD)
 		{
             handguard2 = handguard2Scene.Instantiate<Node3D>();
+            pommel2 = pommel2Scene.Instantiate<Node3D>();
+
             handguard2.RotateX(-(float)1.571);
             AddChild(handguard2);
-			float bladewPercent = 0.2f*((float) ((bladewidth - 0.045) / (0.08 - 0.045)));
+            AddChild(pommel2);
+            float bladewPercent = 0.2f*((float) ((bladewidth - 0.045) / (0.08 - 0.045)));
             float bladedPercent = 0.1f * ((float)((bladedepth - 0.18) / (0.3 - 0.18)));
            
             handguard2.Scale = new Vector3(0.8f+bladewPercent, 0.9f+bladedPercent, 1.0f);
+            pommel2.Translate(new Vector3(0, -0.95f, 0));
         }
 		else if(swordType==SwordType.RAPIER)
 		{
             handguard3 = handguard3Scene.Instantiate<Node3D>();
+            pommel1 = pommel1Scene.Instantiate<Node3D>();
             handguard3.RotateX(-(float)1.571);
             AddChild(handguard3);
+            AddChild(pommel1);
             float bladeDiamPercent = 0.35f * ((float)(((bladedepth-0.04) - 0.01) / (0.03 - 0.01)));
             
 
             handguard3.Scale = new Vector3(0.65f + bladeDiamPercent, 0.65f + bladeDiamPercent, 0.8f);
+			pommel1.Translate(new Vector3(0, (float)-0.143, 0));
         }
 	}
 
@@ -369,8 +395,6 @@ public partial class SwordGeneration : Node3D
 			//lerps for taper
 			currentHeight = (height + (endTaper - height) * currPoint)/2;
 				
-			
-
 			//adds 2d cross section
 			if (i == crossSections)
 			{
@@ -386,7 +410,7 @@ public partial class SwordGeneration : Node3D
             }
 
 
-            if (fullerLength > 0)
+            if (fullerWidth > 0)
 			{
 				GD.Print("fuller?");
                 numofPointsPerCs = 6;
@@ -494,22 +518,23 @@ public partial class SwordGeneration : Node3D
             }
 			else if (SwordType.STRSWORD == sword)
 			{
-				
-				height =(float) (0.015f + (i * 0.01));
+				float length = ((float)i / (crossSections - 1)) * 0.3f;
+                height = (float)(0.5 * Math.Sin(1.55*length + 1.38) - 0.47);
 			}
 			else
 			{
-
-				//start at width then truccate by around 20 percent towards end 
-			}
+                float length = ((float)i / (crossSections - 1)) * 0.15f;
+                height = (float)(0.5 * Math.Sin(2 * length + 1.47) - 0.465);
+               
+            }
 
 			currentHeight = height;
-			//numofPointsPerCs = 12;
+			
 
 			for (int l = 0; l < 12; l++)
 			{
 				double angle = (l * 30) * Math.PI / 180;
-				handlecrossSecPositions.Add(new Vector2((float)(0 + (currentHeight * Math.Cos(angle))), (float)(0 + (currentHeight * Math.Sin(angle)))));
+				handlecrossSecPositions.Add(new Vector2((float)(0 + (currentHeight * Math.Cos(angle))), (float)(0 + ((currentHeight/**0.8*/) * Math.Sin(angle)))));
 
 			}
 
@@ -519,7 +544,7 @@ public partial class SwordGeneration : Node3D
 
 
 
-	private void generateMesh(int crossSecPoints,bool ishandle)
+	private void generateMesh(int crossSecPoints,bool ishandle, SwordType sword)
 	{
 		int crossSections = 11;
 		Godot.Collections.Array surfaceArray = [];
@@ -530,13 +555,31 @@ public partial class SwordGeneration : Node3D
 		List<Vector3> normals = [];
 		List<int> indices = [];
 
-		// Vertex indices.
-		int point = 0;
+		float handlelength=0;
+		float handlePos=0.0f;
+
+        // Vertex indices.
+        int point = 0;
 
 		// Loop over rings.
 		if (ishandle)
 		{
-			float handlelength = 0.4f;
+			if (sword == SwordType.GRTSWORD)
+			{
+				handlelength = 0.4f;
+				handlePos = handlelength;
+			}
+			else if (sword == SwordType.STRSWORD)
+			{
+				handlelength = 0.25f;
+				handlePos = handlelength;
+			}
+			else
+			{
+				handlelength = 0.15f;
+				handlePos = handlelength-0.012f;
+			}
+				
             for (int i = 0; i < crossSections; i++)
             {
                 float v = ((float)i) / crossSections;
@@ -650,7 +693,7 @@ public partial class SwordGeneration : Node3D
 		if (ishandle)
 		{
             meshInstance.SetSurfaceOverrideMaterial(0, gripMaterial);
-            meshInstance.Translate(new Vector3(0, 0, -0.4f));
+            meshInstance.Translate(new Vector3(0, 0, -handlePos));
 			handleMesh = meshInstance;
 		}
 		else
