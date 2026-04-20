@@ -1,19 +1,11 @@
 [gd_scene format=3 uid="uid://bjavp7vbi11qr"]
 
+[ext_resource type="StyleBox" uid="uid://ggy2kfuoybgy" path="res://Resources/UI/ui.tres" id="1_btirk"]
 [ext_resource type="Theme" uid="uid://dm6xohp5y5d6t" path="res://Resources/stockTheme1.tres" id="1_xcj4p"]
 [ext_resource type="Texture2D" uid="uid://co4yofq63mnnm" path="res://Resources/swordwhite.png" id="2_xcj4p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0the"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btirk"]
-bg_color = Color(0.42352942, 0.42352942, 0.42352942, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_color = Color(0, 0, 0, 1)
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xcj4p"]
 bg_color = Color(0.42365062, 0.42365065, 0.42365062, 1)
@@ -53,7 +45,7 @@ theme_override_constants/separation = -2
 [node name="sliderMenu" type="Panel" parent="sidebar/MarginContainer/HBoxContainer" unique_id=637679253]
 custom_minimum_size = Vector2(200, 380)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_btirk")
+theme_override_styles/panel = ExtResource("1_btirk")
 
 [node name="MarginContainer" type="MarginContainer" parent="sidebar/MarginContainer/HBoxContainer/sliderMenu" unique_id=2074369360]
 layout_mode = 1
@@ -188,7 +180,7 @@ text = "Fuller Width"
 layout_mode = 2
 max_value = 0.8
 step = 0.05
-value = 0.3
+value = 0.5
 
 [node name="fullerD" type="Label" parent="sidebar/MarginContainer/HBoxContainer/sliderMenu/MarginContainer/VBoxContainer" unique_id=1889620104]
 visible = false
@@ -264,3 +256,89 @@ offset_right = -2.0
 offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="statMenu" type="Panel" parent="." unique_id=446077292]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.837
+anchor_top = 0.259
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 0.6999512
+offset_top = 0.27999878
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("1_xcj4p")
+theme_override_styles/panel = ExtResource("1_btirk")
+
+[node name="MarginContainer" type="MarginContainer" parent="statMenu" unique_id=484343749]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="statMenu/MarginContainer" unique_id=495623757]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="statMenu/MarginContainer/HBoxContainer" unique_id=1893135279]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="statMenu/MarginContainer/HBoxContainer/VBoxContainer" unique_id=530933576]
+layout_mode = 2
+text = "Sword:"
+
+[node name="Label2" type="Label" parent="statMenu/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1234556683]
+layout_mode = 2
+text = "Weight:"
+
+[node name="Label3" type="Label" parent="statMenu/MarginContainer/HBoxContainer/VBoxContainer" unique_id=2100014464]
+layout_mode = 2
+text = "Slash:"
+
+[node name="Label4" type="Label" parent="statMenu/MarginContainer/HBoxContainer/VBoxContainer" unique_id=556232220]
+layout_mode = 2
+text = "Pierce:"
+
+[node name="Label5" type="Label" parent="statMenu/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1602668582]
+layout_mode = 2
+text = "Chop:"
+
+[node name="Label6" type="Label" parent="statMenu/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1760190895]
+layout_mode = 2
+text = "Guard:"
+
+[node name="statshbox" type="HBoxContainer" parent="statMenu/MarginContainer" unique_id=1424522691]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="statscontainer" type="VBoxContainer" parent="statMenu/MarginContainer/statshbox" unique_id=1570906734]
+layout_mode = 2
+
+[node name="seed" type="Label" parent="statMenu/MarginContainer/statshbox/statscontainer" unique_id=1291701517]
+layout_mode = 2
+text = "seed"
+
+[node name="weight" type="Label" parent="statMenu/MarginContainer/statshbox/statscontainer" unique_id=1418400871]
+layout_mode = 2
+
+[node name="slash" type="Label" parent="statMenu/MarginContainer/statshbox/statscontainer" unique_id=1993649959]
+layout_mode = 2
+
+[node name="pierce" type="Label" parent="statMenu/MarginContainer/statshbox/statscontainer" unique_id=1405003692]
+layout_mode = 2
+
+[node name="chop" type="Label" parent="statMenu/MarginContainer/statshbox/statscontainer" unique_id=2011119383]
+layout_mode = 2
+
+[node name="guard" type="Label" parent="statMenu/MarginContainer/statshbox/statscontainer" unique_id=2143692279]
+layout_mode = 2

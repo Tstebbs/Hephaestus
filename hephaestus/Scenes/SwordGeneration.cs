@@ -57,6 +57,18 @@ public partial class SwordGeneration : Node3D
     Node3D pommel2;
     Node3D pommel3;
 
+	Panel statMenu;
+    Label seedLabel;
+	Label weightLabel;
+	Label slashLabel;
+	Label pierceLabel;
+	Label chopLabel;
+	Label guardLabel;
+	public float bladeWeightVal;
+    float dmg1 = 100;
+    float dmg2 = 100;
+    float dmg3 = 100;
+
     bool isSwordCurved = false;
 	public int numCrossSec = 10;
 
@@ -121,7 +133,18 @@ public partial class SwordGeneration : Node3D
 		crossSecPositions = new Array<Vector2>();
 		handlecrossSecPositions = new Array<Vector2>();
 
-	}
+        statMenu = GetNode<Panel>("SwordBladeMesh/SwordGenUi2/statMenu");
+        //stats labels
+       
+		seedLabel = GetNode<Label>("SwordBladeMesh/SwordGenUi2/statMenu/MarginContainer/statshbox/statscontainer/seed");
+		weightLabel= GetNode<Label>("SwordBladeMesh/SwordGenUi2/statMenu/MarginContainer/statshbox/statscontainer/weight");
+        slashLabel = GetNode<Label>("SwordBladeMesh/SwordGenUi2/statMenu/MarginContainer/statshbox/statscontainer/slash");
+        pierceLabel = GetNode<Label>("SwordBladeMesh/SwordGenUi2/statMenu/MarginContainer/statshbox/statscontainer/pierce");
+        chopLabel = GetNode<Label>("SwordBladeMesh/SwordGenUi2/statMenu/MarginContainer/statshbox/statscontainer/chop");
+        guardLabel = GetNode<Label>("SwordBladeMesh/SwordGenUi2/statMenu/MarginContainer/statshbox/statscontainer/guard");
+
+
+    }
 
 	public override void _Process(double delta)
 	{
@@ -183,46 +206,103 @@ public partial class SwordGeneration : Node3D
 		GenerateSwordType(currSword);
 
 		generateMesh(numofPointsPerCs, false, currSword);
+
+		string currseed=generateSeed(edges, bladeLength, bladeDepth, bladeWidth, bladeTaper, fullerWidth);
+
+		updateDamageValues(currSword, bladeDepth, bladeWidth, bladeLength, bladeTaper, fullerWidth, bladeWeightVal);
+		updateStats(currseed, bladeWeightVal, dmg1, dmg2, dmg3);
+        statMenu.Visible = true;
+
 	}
+
+	private string generateSeed(float edges, float bladeLength, float bladeDepth, float bladeWidth, float bladeTaper,float fullerWidth)
+	{
+		string seed = edges.ToString()+bladeLength.ToString()+bladeDepth.ToString()+bladeWidth.ToString()+bladeTaper.ToString()+fullerWidth.ToString();
+		return seed;
+	}
+
+	private void updateStats(string seed,float weight, float dmg1, float dmg2, float dmg3)
+	{
+		seedLabel.Text = seed;
+		weightLabel.Text=weight.ToString();
+		slashLabel.Text=dmg1.ToString();
+		pierceLabel.Text=dmg2.ToString();
+		chopLabel.Text=dmg3.ToString();
+		guardLabel.Text = "qw";
+
+		
+	}
+
+	private void updateDamageValues(SwordType sword, float bladedepth, float bladeWidth, float bladelength, float bladeTaper, float fullerWidth, float weight)
+	{
+		
+        if (sword == SwordType.GRTSWORD)
+		{
+			
+			dmg1 = 60;
+			dmg2 = 40;
+			dmg3 = 100;
+		}
+		else if (sword == SwordType.STRSWORD)
+		{
+            dmg1 = 100;
+            dmg2 = 50;
+            dmg3 = 40;
+        }
+		else
+		{
+            dmg1 = 20;
+            dmg2 = 100;
+            dmg3 = 10;
+        }
+
+        dmg1 =dmg1* ((float)( (fullerWidth / 0.8) + (bladelength / 2)) / 2);
+		
+		dmg2 = dmg2 * ((float)( (bladeTaper / 0.9)+(bladeWidth/0.02)) / 2);
+
+		dmg3 = dmg3 * ((float)((weight / 90)+(bladedepth/0.25))/2);
+
+    }
+
 
 	private void GenerateSwordType(SwordType sword)
 	{
 		//staight sword point generation
-		if (sword == SwordType.STRSWORD)
-		{
-			createBladeSpine(bladeLength);
-            createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth,fullerLength, fullerDepth);
-			bladeWeightT(sword, bladeDepth, bladeWidth, bladeLength, bladeTaper);
-            addHandleParts(sword, bladeWidth, bladeDepth);
-            createHandle(10, sword, 10f);
-            generateMesh(12, true,sword);
+				if (sword == SwordType.STRSWORD)
+				{
+					createBladeSpine(bladeLength);
+					createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth, fullerLength, fullerDepth);
+					bladeWeightVal = bladeWeightT(sword, bladeDepth, bladeWidth, bladeLength, bladeTaper);
+					addHandleParts(sword, bladeWidth, bladeDepth);
+					createHandle(10, sword, 10f);
+					generateMesh(12, true, sword);
 
 
-        }
+				}
 
-		if (sword == SwordType.GRTSWORD)
-        {
-            createBladeSpine(bladeLength);
-            
-            createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth, fullerLength, fullerDepth);
-            bladeWeightT(sword, bladeDepth, bladeWidth, bladeLength, bladeTaper);
-            addHandleParts(sword, bladeWidth, bladeDepth);
-            createHandle(10, sword, 10);
-			generateMesh(12, true, sword);
+				if (sword == SwordType.GRTSWORD)
+				{
+					createBladeSpine(bladeLength);
 
-        }
+					createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth, fullerLength, fullerDepth);
+					bladeWeightVal = bladeWeightT(sword, bladeDepth, bladeWidth, bladeLength, bladeTaper);
+					addHandleParts(sword, bladeWidth, bladeDepth);
+					createHandle(10, sword, 10);
+					generateMesh(12, true, sword);
 
-        if (sword == SwordType.RAPIER)
-        {
-            createBladeSpine(bladeLength / 2);
-            createThrustingSword(numCrossSec, bladeDepth / 2, bladeTaper);
-			bladeWeightT(sword, bladeDepth/2, bladeDepth/2, bladeLength/2, bladeTaper);
-            addHandleParts(sword,bladeWidth / 2,bladeDepth / 2);
-            createHandle(10, sword, 10);
-            generateMesh(12, true, sword);
-        }
+				}
 
-    }
+				if (sword == SwordType.RAPIER)
+				{
+					createBladeSpine(bladeLength / 2);
+					createThrustingSword(numCrossSec, bladeDepth / 2, bladeTaper);
+					bladeWeightVal = bladeWeightT(sword, bladeDepth / 2, bladeDepth / 2, bladeLength / 2, bladeTaper);
+					addHandleParts(sword, bladeWidth / 2, bladeDepth / 2);
+					createHandle(10, sword, 10);
+					generateMesh(12, true, sword);
+				}
+
+	}
 
 	private void setSwordType()
 	{
@@ -285,7 +365,7 @@ public partial class SwordGeneration : Node3D
             GetNodeOrNull<Node3D>("Handguard3").QueueFree();
             GetNodeOrNull<Node3D>("Pommel1").QueueFree();
         }
-
+        statMenu.Visible = false;
     }
 
 	private void curvedSpine(float length)
@@ -297,7 +377,7 @@ public partial class SwordGeneration : Node3D
 		}
 	}
 
-	private void bladeWeightT(SwordType swordType, float bladedepth ,float bladeWidth ,float bladelength, float bladeTaper)
+	private float bladeWeightT(SwordType swordType, float bladedepth ,float bladeWidth ,float bladelength, float bladeTaper)
 	{
 		float totalVolume = 0;
 
@@ -315,7 +395,7 @@ public partial class SwordGeneration : Node3D
 
         }
 
-		GD.Print("weight in kg = " ,totalVolume* 7850);
+		return (totalVolume * 7850);
 	}
 
 
@@ -412,7 +492,7 @@ public partial class SwordGeneration : Node3D
 
             if (fullerWidth > 0)
 			{
-				GD.Print("fuller?");
+				
                 numofPointsPerCs = 6;
               
 				crossSecPositions.Add(new Vector2(0 - (shapeWidth), 0 - currentHeight +fWidth));
@@ -439,7 +519,7 @@ public partial class SwordGeneration : Node3D
 
     private void createThrustingSword(int crossSections,  float height, float taperLength)
     {
-		GD.Print("height: ", height);
+		
        
 		//start 4 points of blade to be adapted to 12 later to allow tunable sharpness and fuller
 		height = height - 0.04f;
