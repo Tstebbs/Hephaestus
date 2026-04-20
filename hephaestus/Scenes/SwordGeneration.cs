@@ -606,11 +606,11 @@ public partial class SwordGeneration : Node3D
 			for (int i = 0; i < crossSections; i++)
 			{
 				float v = ((float)i) / crossSections;
-
-				// Loop over points per cross section
-				for (int j = 0; j < crossSecPoints; j++)
+				float u;
+                // Loop over points per cross section
+                for (int j = 0; j < crossSecPoints; j++)
 				{
-					float u = ((float)j) / crossSecPoints;
+					u = ((float)j) / crossSecPoints;
 
 					Vector3 vert = new Vector3(crossSecPositions[i * crossSecPoints + j].X, crossSecPositions[i * crossSecPoints + j].Y, SpinePositions[i].X);
 
@@ -621,7 +621,11 @@ public partial class SwordGeneration : Node3D
 					point += 1;
 
 				}
-			}
+				//u = 0.0f;
+				//uvs.Add(new Vector2(u, v));
+
+            }
+			
 		}
 		
 		
