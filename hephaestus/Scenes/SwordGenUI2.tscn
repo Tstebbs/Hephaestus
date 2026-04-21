@@ -258,15 +258,16 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="statMenu" type="Panel" parent="." unique_id=446077292]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.837
 anchor_top = 0.259
 anchor_right = 1.0
-anchor_bottom = 0.5
+anchor_bottom = 0.45600003
 offset_left = 0.6999512
 offset_top = 0.27999878
-offset_bottom = 20.0
+offset_bottom = -0.4800415
 grow_horizontal = 0
 grow_vertical = 2
 theme = ExtResource("1_xcj4p")
@@ -314,6 +315,7 @@ layout_mode = 2
 text = "Chop:"
 
 [node name="Label6" type="Label" parent="statMenu/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1760190895]
+visible = false
 layout_mode = 2
 text = "Guard:"
 
@@ -341,4 +343,5 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="guard" type="Label" parent="statMenu/MarginContainer/statshbox/statscontainer" unique_id=2143692279]
+visible = false
 layout_mode = 2
