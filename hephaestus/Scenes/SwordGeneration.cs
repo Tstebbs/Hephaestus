@@ -425,6 +425,8 @@ public partial class SwordGeneration : Node3D
 
 	private void addHandleParts(SwordType swordType, float bladewidth, float bladedepth)
 	{
+		//dependant on sword type adds scaled hand huard and pommel to scene 
+
 		if(swordType==SwordType.STRSWORD)
 		{
             handguard1 = handguard1Scene.Instantiate<Node3D>();
@@ -437,7 +439,7 @@ public partial class SwordGeneration : Node3D
 
             handguard1.Scale = new Vector3(0.4f + bladewPercent, 0.6f + bladedPercent, 1.0f);
 			pommel3.Translate(new Vector3(0, -0.65f, 0));
-			//pommel2.Scale = new Vector3(0.4f + bladewPercent, 0.6f + bladedPercent, 1.0f);
+			
 
         }
 		else if(swordType == SwordType.GRTSWORD)
@@ -511,11 +513,12 @@ public partial class SwordGeneration : Node3D
                 shapeWidth = shapeWidth / 2f;
                 shapeHeight = shapeHeight / 1.2f;
 				fWidth = fWidth / 2;
+				fullerDepth = fullerDepth / 2;
             }
+			
 
-
-            if (fullerWidth > 0)
-			{
+            if (fullerWidth > 0&& fullerDepth <= 0)
+            {
 				
                 numofPointsPerCs = 6;
               
@@ -529,10 +532,29 @@ public partial class SwordGeneration : Node3D
 
 
 			}
-            else
+			else if(fullerDepth>0 && fullerWidth>0)
 			{
-                numofPointsPerCs = 4;
-                crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
+                numofPointsPerCs = 10;
+
+                GD.Print(fullerDepth);
+
+                crossSecPositions.Add(new Vector2(0 - (shapeWidth)+fullerDepth, 0 - currentHeight + fWidth+fullerDepth));
+                crossSecPositions.Add(new Vector2(0 - (shapeWidth), 0 - currentHeight + fWidth));
+                crossSecPositions.Add(new Vector2(0, 0 - currentHeight));
+                crossSecPositions.Add(new Vector2(0 + (shapeWidth), 0 - currentHeight + fWidth));
+                crossSecPositions.Add(new Vector2(0 + (shapeWidth)-fullerDepth, 0 - currentHeight + fWidth + fullerDepth));
+
+                crossSecPositions.Add(new Vector2(0 + (shapeWidth)-fullerDepth, 0 + currentHeight - fWidth-fullerDepth));
+                crossSecPositions.Add(new Vector2(0 + (shapeWidth), 0 + currentHeight - fWidth));
+                crossSecPositions.Add(new Vector2(0, 0 + currentHeight));
+                crossSecPositions.Add(new Vector2(0 - (shapeWidth), 0 + currentHeight - fWidth));
+                crossSecPositions.Add(new Vector2(0 - (shapeWidth)+fullerDepth, 0 + currentHeight - fWidth - fullerDepth));
+
+            }
+			else
+			{
+				numofPointsPerCs = 4;
+				crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
 				crossSecPositions.Add(new Vector2(0, 0 - currentHeight));
 				crossSecPositions.Add(new Vector2(0 + shapeWidth, 0));
 				crossSecPositions.Add(new Vector2(0, 0 + currentHeight));
