@@ -4,6 +4,7 @@
 [ext_resource type="Theme" uid="uid://dm6xohp5y5d6t" path="res://Resources/stockTheme1.tres" id="1_r150o"]
 [ext_resource type="Texture2D" uid="uid://cqf6m3q47xb5j" path="res://Resources/UI/backround.jpg" id="2_rgh2o"]
 [ext_resource type="Texture2D" uid="uid://dqampnhgut8he" path="res://Resources/UI/menu ui.png" id="4_pbw6q"]
+[ext_resource type="StyleBox" uid="uid://ggy2kfuoybgy" path="res://Resources/UI/ui.tres" id="5_pbw6q"]
 
 [node name="MainMenu" type="Control" unique_id=244788497]
 layout_mode = 3
@@ -91,7 +92,7 @@ focus_neighbor_top = NodePath("../Quit")
 focus_neighbor_bottom = NodePath("../start2")
 theme = ExtResource("1_r150o")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Start Generation"
+text = "Start - Generation"
 
 [node name="start2" type="Button" parent="TextureRect2/buttonvContainer" unique_id=1482042275]
 layout_mode = 2
@@ -101,7 +102,7 @@ focus_neighbor_top = NodePath("../start")
 focus_neighbor_bottom = NodePath("../Info")
 theme = ExtResource("1_r150o")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Start-Basic "
+text = "Start - Basic "
 
 [node name="Info" type="Button" parent="TextureRect2/buttonvContainer" unique_id=702461247]
 layout_mode = 2
@@ -111,7 +112,7 @@ focus_neighbor_top = NodePath("../start2")
 focus_neighbor_bottom = NodePath("../Quit")
 theme = ExtResource("1_r150o")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Info & Controls"
+text = "Info - Controls"
 
 [node name="Quit" type="Button" parent="TextureRect2/buttonvContainer" unique_id=1507436565]
 layout_mode = 2
@@ -122,3 +123,37 @@ focus_neighbor_bottom = NodePath("../start")
 theme = ExtResource("1_r150o")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Quit"
+
+[node name="Panel" type="Panel" parent="." unique_id=1524018791]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.46500003
+anchor_right = 0.263
+anchor_bottom = 0.813
+offset_top = -0.20004272
+offset_right = -0.7000122
+offset_bottom = -0.040039063
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("5_pbw6q")
+
+[node name="Label" type="Label" parent="Panel" unique_id=1409406672]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "  
+  A Procedural sword generator pairing mesh generation
+  and procedural part picking and to create swords with 
+  dynamic stats 
+
+  Controls
+  WASD - Movement
+  Mouse - Look Direction
+  Mouse Wheel - Camera Speed
+  Right Click - To control Sliders and Buttons
+  Escape - Quit
+  Start Basic- no frills enviroment
+  By Thomas Stebbings - Computer Games Technology"

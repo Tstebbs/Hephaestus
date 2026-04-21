@@ -2,6 +2,20 @@
 
 [ext_resource type="PackedScene" uid="uid://b5wp0j2cyo3j3" path="res://Resources/handguards/RapierGuard/Rguardblend.glb" id="1_qpm8d"]
 [ext_resource type="Material" uid="uid://bee4x574fjxim" path="res://Resources/materials/metal1/mat.tres" id="2_qpm8d"]
+[ext_resource type="Texture2D" uid="uid://ckopsh3itqecx" path="res://Resources/materials/metal1/Metal009_2K-JPG_Roughness.jpg" id="3_kijwf"]
+[ext_resource type="Texture2D" uid="uid://bqw4phm8gj8fy" path="res://Resources/materials/metal1/Metal009_2K-JPG_NormalGL.jpg" id="4_2fekd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pyvmc"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.5211406, 0.5211406, 0.5211405, 1)
+metallic = 1.0
+metallic_specular = 1.0
+roughness = 0.36
+roughness_texture = ExtResource("3_kijwf")
+normal_texture = ExtResource("4_2fekd")
+heightmap_scale = 16.0
+heightmap_texture = ExtResource("3_kijwf")
+uv1_scale = Vector3(0.001, 0.001, 0.001)
 
 [node name="Rguardblend" unique_id=1745227800 instance=ExtResource("1_qpm8d")]
 
@@ -9,4 +23,4 @@
 surface_material_override/0 = ExtResource("2_qpm8d")
 
 [node name="Cube_004" parent="." index="1" unique_id=76294236]
-surface_material_override/0 = ExtResource("2_qpm8d")
+surface_material_override/0 = SubResource("StandardMaterial3D_pyvmc")

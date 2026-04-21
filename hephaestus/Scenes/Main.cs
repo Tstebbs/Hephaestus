@@ -6,6 +6,8 @@ public partial class Main : Control
     Button startButton;
     Button start2Button;
     Button quitButton;
+    Button infoButton;
+    Panel panel;
     public override void _Ready()
     {
         startButton = GetNode<Button>("TextureRect2/buttonvContainer/start");
@@ -16,6 +18,10 @@ public partial class Main : Control
        
         quitButton = GetNode<Button>("TextureRect2/buttonvContainer/Quit");
         quitButton.Pressed += onQuitPressed;
+
+        infoButton = GetNode<Button>("TextureRect2/buttonvContainer/Info");
+        infoButton.Pressed += onInfoPressed;
+        panel = GetNode<Panel>("Panel");
     }
 
     private void onStartPressed()
@@ -32,5 +38,11 @@ public partial class Main : Control
     {
         GetTree().Quit();
     }
+
+    private void onInfoPressed()
+    {
+        panel.Visible =! panel.Visible;
+    }
+
 
 }

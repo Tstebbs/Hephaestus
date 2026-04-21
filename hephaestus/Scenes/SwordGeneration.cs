@@ -71,6 +71,8 @@ public partial class SwordGeneration : Node3D
     float dmg2 = 100;
     float dmg3 = 100;
 
+    private bool esc = false; 
+
     bool isSwordCurved = false;
 	public int numCrossSec = 10;
 
@@ -155,6 +157,12 @@ public partial class SwordGeneration : Node3D
 
 	public override void _Process(double delta)
 	{
+
+		if (esc == true) 
+		{
+            GetTree().Quit();
+        }
+
 		//keeps slider values up to date for use in generation
 		bladeLength = (float)lengthSlider.Value;
 		bladeDepth = (float)depthSlider.Value;
@@ -176,9 +184,9 @@ public partial class SwordGeneration : Node3D
 				depthSlider.Value = 0.18f;
 			}
 
-			if(widthSlider.Value <0.045)
+			if(widthSlider.Value <0.01)
 			{
-				widthSlider.Value = 0.045;
+				widthSlider.Value = 0.01;
 			}
 
 			if (taperSlider.Value>0.5)
@@ -199,12 +207,35 @@ public partial class SwordGeneration : Node3D
 			{
 				depthSlider.Value = 0.14f;
 			}
+			fullerWSlider.Value = 0;
+			fullerDSlider.Value = 0;
 			widthSlider.Value= 0;
 		}
 
 	}
 
-	private void generatePressed()
+	//handles quiting input
+	public override void _Input(InputEvent _event)
+	{
+
+        InputEventKey keyEvent = _event as InputEventKey;
+        if (keyEvent != null)
+        {
+            switch (keyEvent.Keycode)
+            {
+                case Key.Escape:
+                    {
+                        esc = keyEvent.Pressed;
+                    }
+                    break;
+
+               
+            }
+        }
+    }
+
+
+    private void generatePressed()
 	{
 		
         if (GetChild<MeshInstance3D>(2) != null)
@@ -288,7 +319,7 @@ public partial class SwordGeneration : Node3D
 				{
 					createBladeSpine(bladeLength);
 					createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth, fullerLength, fullerDepth);
-					bladeWeightVal = bladeWeightT(sword, bladeDepth, bladeWidth, bladeLength, bladeTaper);
+					bladeWeightVal = bladeWeightT(sword, bladeDepth, bladeWidth, bladeLength, bladeTaper,fullerWidth,fullerDepth);
 					addHandleParts(sword, bladeWidth, bladeDepth);
 					createHandle(10, sword, 10f);
 					generateMesh(12, true, sword);
@@ -301,7 +332,7 @@ public partial class SwordGeneration : Node3D
 					createBladeSpine(bladeLength);
 
 					createStraightSword2DArray(numCrossSec, bladeWidth, bladeDepth, bladeTaper, fullerWidth, fullerLength, fullerDepth);
-					bladeWeightVal = bladeWeightT(sword, bladeDepth, bladeWidth, bladeLength, bladeTaper);
+					bladeWeightVal = bladeWeightT(sword, bladeDepth, bladeWidth, bladeLength, bladeTaper, fullerWidth, fullerDepth);
 					addHandleParts(sword, bladeWidth, bladeDepth);
 					createHandle(10, sword, 10);
 					generateMesh(12, true, sword);
@@ -313,7 +344,7 @@ public partial class SwordGeneration : Node3D
 			       //halfs values to keep thusting sword realistic
 					createBladeSpine(bladeLength / 2);
 					createThrustingSword(numCrossSec, bladeDepth / 2, bladeTaper);
-					bladeWeightVal = bladeWeightT(sword, bladeDepth / 2, bladeDepth / 2, bladeLength / 2, bladeTaper);
+					bladeWeightVal = bladeWeightT(sword, bladeDepth / 2, bladeDepth / 2, bladeLength / 2, bladeTaper,0,0);
 					addHandleParts(sword, bladeWidth / 2, bladeDepth / 2);
 					createHandle(10, sword, 10);
 					generateMesh(12, true, sword);
@@ -397,15 +428,21 @@ public partial class SwordGeneration : Node3D
 		}
 	}
 
-	private float bladeWeightT(SwordType swordType, float bladedepth ,float bladeWidth ,float bladelength, float bladeTaper)
+	private float bladeWeightT(SwordType swordType, float bladedepth ,float bladeWidth ,float bladelength, float bladeTaper,float fullerWidth, float fullerDepth)
 	{
 		float totalVolume = 0;
 
         if (swordType == SwordType.STRSWORD || swordType == SwordType.GRTSWORD)
 		{
+			GD.Print(fullerWidth);
+			if(fullerWidth==0)
+			{
+				fullerWidth = 1;
+			}
+			float fullerArea= 0.6f*((fullerDepth*(((1-fullerWidth)*bladedepth)))*2);
             //uses cuboid volume formula averageing out start and end 2d areas then times by height
             float averageDepth = ((bladedepth + bladedepth * (1-bladeTaper))/ 2);
-            totalVolume = averageDepth* bladeWidth * bladelength;
+            totalVolume = ((averageDepth* bladeWidth)-fullerArea)* bladelength;
 	
         }
 		else
@@ -535,9 +572,7 @@ public partial class SwordGeneration : Node3D
 			else if(fullerDepth>0 && fullerWidth>0)
 			{
                 numofPointsPerCs = 10;
-
-                GD.Print(fullerDepth);
-
+				
                 crossSecPositions.Add(new Vector2(0 - (shapeWidth)+fullerDepth, 0 - currentHeight + fWidth+fullerDepth));
                 crossSecPositions.Add(new Vector2(0 - (shapeWidth), 0 - currentHeight + fWidth));
                 crossSecPositions.Add(new Vector2(0, 0 - currentHeight));
@@ -817,8 +852,8 @@ public partial class SwordGeneration : Node3D
 
 		MeshInstance3D meshInstance = new MeshInstance3D();
 		meshInstance.Mesh = arrMesh;
-		
-		meshInstance.RotateX(-(float)1.571);
+        meshInstance.RotateZ(-(float)3.142);
+        meshInstance.RotateX(-(float)1.571);
 		AddChild(meshInstance);
 		if (ishandle)
 		{

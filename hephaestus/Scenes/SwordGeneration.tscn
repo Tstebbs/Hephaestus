@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://386qi276ctpq" path="res://Scenes/SwordGeneration.cs" id="1_p7yi8"]
 [ext_resource type="PackedScene" uid="uid://bjavp7vbi11qr" path="res://Scenes/SwordGenUI2.tscn" id="2_na31y"]
 [ext_resource type="Script" uid="uid://0i5iyq5j5gx2" path="res://Scenes/FreeLookCameraBase.cs" id="3_c6g4d"]
-[ext_resource type="PackedScene" uid="uid://7nqk8rt7rbwb" path="res://Scenes/handle1.tscn" id="4_na31y"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_na31y"]
 
@@ -16,20 +15,12 @@ mesh = SubResource("ArrayMesh_na31y")
 [node name="SwordGenUi2" parent="SwordBladeMesh" unique_id=1180212408 instance=ExtResource("2_na31y")]
 metadata/_edit_use_anchors_ = true
 
-[node name="Handle1" parent="SwordBladeMesh" unique_id=54470607 instance=ExtResource("4_na31y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.004752625, 0, -0.007387638)
-visible = false
-
-[node name="Handle2" parent="SwordBladeMesh" unique_id=368892085 instance=ExtResource("4_na31y")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.004752625, -0.36776397, -0.007387638)
-visible = false
-
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=186079098]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009785533, 1.917815, 4.264933)
 omni_range = 20.0
 
 [node name="Camera3D" type="Camera3D" parent="OmniLight3D" unique_id=1727162422]
-transform = Transform3D(-0.0017596729, -0.3349254, 0.94224304, -0.0006254841, 0.94224465, 0.33492485, -0.99999833, 1.1641552e-10, -0.0018675328, 2.0047822, -1.1073389, -4.264933)
+transform = Transform3D(-0.50000006, 0.29050958, -0.81584567, 0, 0.94205743, 0.33545157, 0.8660254, 0.1677258, -0.47102877, -1.4907464, -1.1073389, -5.0137477)
 current = true
 fov = 74.07165
 script = ExtResource("3_c6g4d")
