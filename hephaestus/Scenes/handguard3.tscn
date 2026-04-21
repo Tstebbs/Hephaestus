@@ -9,6 +9,7 @@ bottom_radius = 2.4
 height = 2.2
 
 [node name="Handguard3" type="Node3D" unique_id=60926434]
+transform = Transform3D(0.95, 0, 0, 0, 0.95, 0, 0, 0, 0.95, 0, 0, 0)
 
 [node name="Rguardblend2" parent="." unique_id=1247374664 instance=ExtResource("2_7f078")]
 transform = Transform3D(0.01, 0, 0, 0, -4.3711387e-10, -0.01, 0, 0.01, -4.3711387e-10, 0, 0, 0.048667625)

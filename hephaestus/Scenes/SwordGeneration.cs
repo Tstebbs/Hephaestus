@@ -200,6 +200,11 @@ public partial class SwordGeneration : Node3D
             {
                 depthSlider.Value = 0.2f;
             }
+
+			if(widthSlider.Value<0.01&& fullerDSlider.Value!=0 && fullerDSlider.Value > 0.004 )
+			{
+				fullerDSlider.Value = 0.004;
+			}
         }
 		else if(edges==0)
 		{
@@ -439,7 +444,7 @@ public partial class SwordGeneration : Node3D
 			{
 				fullerWidth = 1;
 			}
-			float fullerArea= 0.6f*((fullerDepth*(((1-fullerWidth)*bladedepth)))*2);
+			float fullerArea= 0.6f*((fullerDepth*(((1-fullerWidth)*bladedepth))));
             //uses cuboid volume formula averageing out start and end 2d areas then times by height
             float averageDepth = ((bladedepth + bladedepth * (1-bladeTaper))/ 2);
             totalVolume = ((averageDepth* bladeWidth)-fullerArea)* bladelength;
@@ -453,7 +458,7 @@ public partial class SwordGeneration : Node3D
 			double taperArea= (bladedepth*(1 - bladeTaper)) * (bladedepth* (1 - bladeTaper)) * 3.14;
             double averageArea = area + taperArea;
 			averageArea = averageArea / 2;
-			totalVolume = (float)(averageArea * bladelength);
+			totalVolume = (float)(0.8f*(averageArea * bladelength));
         }
 		//times by density of steel to get weight
 		return (totalVolume * 7850);
