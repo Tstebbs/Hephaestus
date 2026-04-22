@@ -1,11 +1,7 @@
 using Godot;
 using Godot.Collections;
-using Godot.NativeInterop;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Transactions;
-using static Godot.WebSocketPeer;
 
 public partial class SwordGeneration : Node3D
 {
@@ -66,14 +62,18 @@ public partial class SwordGeneration : Node3D
 	Label pierceLabel;
 	Label chopLabel;
 	Label guardLabel;
+
 	public float bladeWeightVal;
+	//inital dmg values
     float dmg1 = 100;
     float dmg2 = 100;
     float dmg3 = 100;
 
+	//for handling input
     private bool esc = false; 
 
     bool isSwordCurved = false;
+
 	public int numCrossSec = 10;
 
 	Godot.Collections.Array surfaceArray = [];   
@@ -525,6 +525,7 @@ public partial class SwordGeneration : Node3D
 			endTaper = height * ((1 - taperLength));
 		}
 		
+		//halfs for centre to edge values
 		float shapeWidth = width / 2;
 		float shapeHeight = height / 2;
 		float currPoint = 0;
@@ -550,6 +551,7 @@ public partial class SwordGeneration : Node3D
 				shapeWidth = 0;
 			}
 
+			//creates point
             if (i >= 8)
             {
                 shapeWidth = shapeWidth / 2f;
@@ -561,7 +563,7 @@ public partial class SwordGeneration : Node3D
 
             if (fullerWidth > 0&& fullerDepth <= 0)
             {
-				
+				//adds cross section points to array for flat sided blade
                 numofPointsPerCs = 6;
               
 				crossSecPositions.Add(new Vector2(0 - (shapeWidth), 0 - currentHeight +fWidth));
@@ -576,6 +578,7 @@ public partial class SwordGeneration : Node3D
 			}
 			else if(fullerDepth>0 && fullerWidth>0)
 			{
+				//adds cross sections for blade with fullers to array
                 numofPointsPerCs = 10;
 				
                 crossSecPositions.Add(new Vector2(0 - (shapeWidth)+fullerDepth, 0 - currentHeight + fWidth+fullerDepth));
@@ -593,6 +596,7 @@ public partial class SwordGeneration : Node3D
             }
 			else
 			{
+				//basic gladius cross section
 				numofPointsPerCs = 4;
 				crossSecPositions.Add(new Vector2(0 - shapeWidth, 0));
 				crossSecPositions.Add(new Vector2(0, 0 - currentHeight));
@@ -603,6 +607,7 @@ public partial class SwordGeneration : Node3D
 		}
 	}
 
+	//creates circular cross section for thrusting sword
     private void createThrustingSword(int crossSections,  float height, float taperLength)
     {
 		
@@ -640,6 +645,7 @@ public partial class SwordGeneration : Node3D
                 //shapeWidth = 0;
             }
 
+			//tapers to a point
             if (i >= 8)
             {
                 //shapeWidth = shapeWidth / 2f;
@@ -648,6 +654,7 @@ public partial class SwordGeneration : Node3D
 
             numofPointsPerCs = 12;
 
+			//loops through adding 12 points in circle dependant on radius
 			for(int k=0;k< numofPointsPerCs;k++)
 			{
 				double angle = (k * 30) * Math.PI / 180;
@@ -661,6 +668,7 @@ public partial class SwordGeneration : Node3D
 
     private void createHandle(int crossSections, SwordType sword, float weight)
     {
+		//initial values
 		float height = 0.125f;
 		float currPoint = 0;
 		float currentHeight = height;
@@ -673,8 +681,10 @@ public partial class SwordGeneration : Node3D
 				currPoint = (float)i / crossSections;
 			}
 
+			
 			if (SwordType.GRTSWORD == sword)
 			{
+				//scales radius alng the length to create taper 
                 double scaleFactor = 0.004;
                 if (i > 5)
                 {
@@ -684,11 +694,13 @@ public partial class SwordGeneration : Node3D
             }
 			else if (SwordType.STRSWORD == sword)
 			{
-				float length = ((float)i / (crossSections - 1)) * 0.3f;
+                //calculates radius using position on curve
+                float length = ((float)i / (crossSections - 1)) * 0.3f;
                 height = (float)(0.5 * Math.Sin(1.55*length + 1.38) - 0.47);
 			}
 			else
 			{
+                //calculates radius using position on curve
                 float length = ((float)i / (crossSections - 1)) * 0.15f;
                 height = (float)(0.5 * Math.Sin(2 * length + 1.47) - 0.465);
                
@@ -696,7 +708,7 @@ public partial class SwordGeneration : Node3D
 
 			currentHeight = height;
 			
-
+			//loops through using calulated radius to create cross sections that are added to array 
 			for (int l = 0; l < 12; l++)
 			{
 				double angle = (l * 30) * Math.PI / 180;
@@ -708,9 +720,9 @@ public partial class SwordGeneration : Node3D
 		}
 	}
 
-
-
-	private void generateMesh(int crossSecPoints,bool ishandle, SwordType sword)
+    //used for both handle and blade generation to take cross section array of 2D points turn into 3D array with height values before looping
+    //each point to draw faces 
+    private void generateMesh(int crossSecPoints,bool ishandle, SwordType sword)
 	{
 		int crossSections = 11;
 		Godot.Collections.Array surfaceArray = [];
@@ -727,9 +739,10 @@ public partial class SwordGeneration : Node3D
         // Vertex indices.
         int point = 0;
 
-		// Loop over rings.
+		//checks what its generating
 		if (ishandle)
 		{
+			//if its a handle sets up length and position valuesx based on sword type
 			if (sword == SwordType.GRTSWORD)
 			{
 				handlelength = 0.4f;
@@ -750,8 +763,11 @@ public partial class SwordGeneration : Node3D
             {
                 float v = ((float)i) / crossSections;
 
+				//finds current z pointr based on length and what cross section its on
                 float z = ((float)i / (crossSections - 1)) * handlelength;
-                // Loop over points per cross section
+
+                // Loop over points per cross section adding z values 
+				//adds vertex to list, black normal and uvs
                 for (int j = 0; j < crossSecPoints; j++)
                 {
                     float u = ((float)j) / crossSecPoints;
@@ -769,6 +785,7 @@ public partial class SwordGeneration : Node3D
         }
 		else
 		{
+			//if not a hanfdle follows same steps but adds z postion from list of spine positions
 			for (int i = 0; i < crossSections; i++)
 			{
 				float v = ((float)i) / crossSections;
@@ -807,14 +824,15 @@ public partial class SwordGeneration : Node3D
 				
 				//returns next i
 				int nextRow = (j + 1) % crossSecPoints;
-				// Create triangles in ring using indices.
+				// Create triangle indices and adds to normals 
 				if (i > 0)
 				{
                     indices.Add(prevRow + j);
 					indices.Add(thisRow + j);
 					indices.Add(prevRow + nextRow);
 					
-					Vector3 n1 = (verts[thisRow + j] - verts[prevRow + j]).Cross(verts[prevRow + nextRow] - verts[prevRow + j]);
+					
+					Vector3 n1 = (verts[thisRow + j ] - verts[prevRow + j]).Cross(verts[prevRow+ nextRow] - verts[prevRow + j]);
 					
 					normals[prevRow + j] += n1; 
 					normals[thisRow + j] += n1; 
@@ -851,23 +869,28 @@ public partial class SwordGeneration : Node3D
         
         if (arrMesh != null)
 		{
+			//adds surfaces as triangle to arrat mesh
 			arrMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, surfaceArray);
 			
 		}
 
 		MeshInstance3D meshInstance = new MeshInstance3D();
+		///adds the array mesh as the mesh for the mesh instance object
 		meshInstance.Mesh = arrMesh;
+		//rotated primarily for visual purposes
         meshInstance.RotateZ(-(float)3.142);
         meshInstance.RotateX(-(float)1.571);
 		AddChild(meshInstance);
 		if (ishandle)
 		{
+			//changes position to match blade type  and leather texture
             meshInstance.SetSurfaceOverrideMaterial(0, gripMaterial);
             meshInstance.Translate(new Vector3(0, 0, -handlePos));
 			handleMesh = meshInstance;
 		}
 		else
 		{
+			//adds metal material
             meshInstance.SetSurfaceOverrideMaterial(0, bladeMaterial);
             currMesh = meshInstance;
         }
