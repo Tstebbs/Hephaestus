@@ -830,25 +830,31 @@ public partial class SwordGeneration : Node3D
                     indices.Add(prevRow + j);
 					indices.Add(thisRow + j);
 					indices.Add(prevRow + nextRow);
-					
-					
-					Vector3 n1 = (verts[thisRow + j ] - verts[prevRow + j]).Cross(verts[prevRow+ nextRow] - verts[prevRow + j]);
-					
-					normals[prevRow + j] += n1; 
-					normals[thisRow + j] += n1; 
+
+
+                    //Vector3 n1 = (verts[thisRow + j] - verts[prevRow + j]).Cross(verts[prevRow + nextRow] - verts[prevRow + j]);
+                    //Vector3 n2 = (verts[thisRow + j] - verts[prevRow + nextRow]).Cross(verts[thisRow + nextRow] - verts[prevRow + nextRow]);
+
+
+                    Vector3 n1 = (verts[thisRow + j] - verts[prevRow + j]).Cross(verts[prevRow + j] - verts[prevRow + nextRow]);
+                    Vector3 n2 = (verts[thisRow + j] - verts[prevRow + nextRow]).Cross(verts[prevRow + nextRow] - verts[thisRow + nextRow]);
+
+
+                    normals[prevRow + j] += n1;
+					normals[thisRow + j] += n1;
 					normals[prevRow + nextRow] += n1;
 
 					indices.Add(prevRow + nextRow);
 					indices.Add(thisRow + j);
 					indices.Add(thisRow + nextRow);
 
-					Vector3 n2 = (verts[thisRow + j] - verts[prevRow + nextRow]).Cross(verts[thisRow + nextRow] - verts[prevRow + nextRow]); 
-					
+
+
 					normals[prevRow + nextRow] += n2;
 					normals[thisRow + j] += n2;
 					normals[thisRow + nextRow] += n2;
 
-                }
+				}
 			  
 			}
 		

@@ -306,6 +306,7 @@ text = "Guard:"
 [node name="statshbox" type="HBoxContainer" parent="statMenu/MarginContainer" unique_id=1424522691]
 layout_mode = 2
 size_flags_horizontal = 8
+alignment = 2
 
 [node name="statscontainer" type="VBoxContainer" parent="statMenu/MarginContainer/statshbox" unique_id=1570906734]
 layout_mode = 2
